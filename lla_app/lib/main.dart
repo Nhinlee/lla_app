@@ -1,67 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:lla_app/presentation.dart';
+import 'package:lla_app/repository.dart';
+import 'package:lla_app/src/di/di.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_simple/redux_simple.dart';
+
+import 'business.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // Init DI
+  configureDependencies();
+  final appInjector = getAppInjector();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+  // Setup repository
+  AppRepo.repo = appInjector.appRepository;
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  // Init state
+  final appState = AppState.initial();
 
-  final String title;
+  // Init store
+  final store = Store<AppState>(
+    HandlerReducer<AppState>().createReducer(),
+    initialState: appState,
+    middleware: [
+      HandlerMiddleware<AppState>(),
+    ],
+  );
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  // Setup interceptor
+  appInjector.dio.interceptors.add(
+    TokenInterceptors(
+      store: store,
+    ),
+  );
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
+  runApp(const LLAApp());
 }
