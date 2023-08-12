@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:lla_app/presentation.dart';
 import 'package:lla_app/repository.dart';
 import 'package:lla_app/src/di/di.dart';
@@ -36,5 +37,10 @@ void main() {
     ),
   );
 
-  runApp(const LLAApp());
+  runApp(
+    StoreProvider(
+      store: store,
+      child: const LLAApp(),
+    ),
+  );
 }

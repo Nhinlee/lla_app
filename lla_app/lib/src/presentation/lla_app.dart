@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:lla_app/presentation.dart';
 
 class LLAApp extends StatelessWidget {
   const LLAApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'LLA App',
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World'),
+        appBar: AppBar(
+          title: Text('Learning items'),
         ),
+        body: LearningItemsScreen(),
       ),
     );
   }
