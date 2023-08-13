@@ -37,6 +37,7 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
+        shadowColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Column(

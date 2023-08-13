@@ -4,6 +4,7 @@ import 'package:lla_app/presentation.dart';
 class AppRoutes {
   static const homeScreen = '/';
   static const learningItemDetailScreen = '/learning_item_detail_screen';
+  static const uploadLIScreen = '/upload_li_screen';
 // static const login = '/login';
 // static const editProfile = '/edit_profile';
 // static const splashScreen = '/splash_screen';

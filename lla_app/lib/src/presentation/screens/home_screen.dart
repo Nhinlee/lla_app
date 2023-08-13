@@ -22,7 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Learning items'),
+        shadowColor: Colors.transparent,
       ),
+      backgroundColor: Colors.white,
       body: IndexedStack(
         index: _currentIndex,
         children: const [

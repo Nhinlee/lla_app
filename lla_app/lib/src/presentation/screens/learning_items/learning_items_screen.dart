@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lla_app/presentation.dart';
 
 class LearningItemsScreen extends StatefulWidget {
@@ -10,6 +11,8 @@ class LearningItemsScreen extends StatefulWidget {
 }
 
 class _LearningItemsScreenState extends State<LearningItemsScreen> {
+  final _imagePicker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -99,7 +102,9 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
 
   Widget buildCaptureImageButton() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        onCaptureImage();
+      },
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(16),
@@ -157,5 +162,30 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
         ParamKeys.learningItemId: LearningItemId,
       },
     );
+  }
+
+  void onCaptureImage() async {
+    final imageFile = await _getImage();
+    if (imageFile == null) {
+      return;
+    }
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => UploadLIScreen(
+          imageFile: imageFile,
+        ),
+      ),
+    );
+  }
+
+  Future<XFile?> _getImage() async {
+    final imageFile = await _imagePicker.pickImage(
+      imageQuality: 100,
+      preferredCameraDevice: CameraDevice.rear,
+      source: ImageSource.gallery,
+    );
+
+    return imageFile;
   }
 }

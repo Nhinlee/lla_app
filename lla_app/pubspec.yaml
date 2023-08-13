@@ -17,12 +17,16 @@ dependencies:
 #  intl_phone_number_input: ^0.7.2
 #  country_pickers: ^2.0.0
 #  pinput: ^2.2.21
-  go_router: ^10.0.0
   salomon_bottom_bar: ^3.3.2
+  simple_gradient_text: ^1.2.4
 #  audio_video_progress_bar: ^1.0.0
 #  holding_gesture: ^1.1.0
 #  avatar_glow: ^2.0.2
 #  flutter_native_splash: ^2.2.9
+
+  # Navigate
+  go_router: ^10.0.0
+
 
   # Platform features
 #  just_audio: ^0.9.31
@@ -34,7 +38,8 @@ dependencies:
 #  audio_session: ^0.1.13
 #  path_provider: ^2.0.13
 #  webview_flutter: ^4.0.6
-#  file_picker: ^5.2.5
+  file_picker: ^5.2.5
+  image_picker: ^1.0.0
 #  platform_device_id: ^1.0.1
 
 

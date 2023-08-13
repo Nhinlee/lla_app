@@ -16,6 +16,11 @@ class _LLAAppState extends State<LLAApp> {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         primaryColor: Colors.purple,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.purple,
+          shadowColor: Colors.transparent,
+        ),
       ),
       routerConfig: appRouter,
     );
