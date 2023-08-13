@@ -48,7 +48,7 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.purple,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: const [
                     BoxShadow(
@@ -93,7 +93,6 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(16),
-        backgroundColor: Colors.blue,
         elevation: 0,
       ),
       child: const Icon(

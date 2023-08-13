@@ -17,6 +17,10 @@ class _LLAAppState extends State<LLAApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'LLA App',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        primaryColor: Colors.purple,
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Learning items'),
