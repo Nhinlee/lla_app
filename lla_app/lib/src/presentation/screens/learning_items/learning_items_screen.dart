@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lla_app/presentation.dart';
 
 class LearningItemsScreen extends StatefulWidget {
   const LearningItemsScreen({Key? key}) : super(key: key);
@@ -42,45 +44,50 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
             horizontal: 16,
             vertical: 8,
           ),
-          child: Row(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(0, 4),
-                      blurRadius: 16,
-                    ),
-                  ],
+          child: GestureDetector(
+            onTap: () => navigateToLearningItemDetailScreen(
+              index.toString(),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.purple,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0, 4),
+                        blurRadius: 16,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Learning Item $index',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Subtitle',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ],
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Learning Item $index',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Subtitle',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 16,
-              ),
-            ],
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 16,
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -137,6 +144,12 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void navigateToLearningItemDetailScreen(String LearningItemId) {
+    context.push(
+      AppRoutes.learningItemDetailScreen,
     );
   }
 }
