@@ -39,30 +39,33 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
+        return InkWell(
+          onTap: () => navigateToLearningItemDetailScreen(
+            index.toString(),
           ),
-          child: GestureDetector(
-            onTap: () => navigateToLearningItemDetailScreen(
-              index.toString(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
             ),
             child: Row(
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0, 4),
-                        blurRadius: 16,
-                      ),
-                    ],
+                Hero(
+                  tag: "learning_item_$index",
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          offset: Offset(0, 4),
+                          blurRadius: 16,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -148,8 +151,11 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
   }
 
   void navigateToLearningItemDetailScreen(String LearningItemId) {
-    context.push(
+    context.pushNamed(
       AppRoutes.learningItemDetailScreen,
+      queryParameters: {
+        ParamKeys.learningItemId: LearningItemId,
+      },
     );
   }
 }

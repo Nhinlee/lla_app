@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lla_app/presentation.dart';
 
 class LearningItemDetailScreen extends StatefulWidget {
   const LearningItemDetailScreen({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class LearningItemDetailScreen extends StatefulWidget {
 
 class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
   double _screenWidth = 0;
+  String _learningItemId = "";
 
   final _englishSentences = [
     "The wind acted like a hairdryer, playing with her hair.",
@@ -23,6 +26,10 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
     // Get media query data
     final mediaQuery = MediaQuery.of(context);
     _screenWidth = mediaQuery.size.width;
+
+    // Get query parameters
+    final queryParameters = GoRouterState.of(context).uri.queryParameters;
+    _learningItemId = queryParameters[ParamKeys.learningItemId] ?? "";
   }
 
   @override
@@ -36,7 +43,7 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: "learning_item_image",
+              tag: "learning_item_$_learningItemId",
               child: buildLIImageContainer(),
             ),
             const SizedBox(height: 16),

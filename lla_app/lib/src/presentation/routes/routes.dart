@@ -21,9 +21,8 @@ final appRouter = GoRouter(
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      name:
-          '${AppRoutes.learningItemDetailScreen}/:${ParamKeys.learningItemId}',
-      path: AppRoutes.learningItemDetailScreen,
+      path: '${AppRoutes.learningItemDetailScreen}/${ParamKeys.learningItemId}',
+      name: AppRoutes.learningItemDetailScreen,
       builder: (context, state) => const LearningItemDetailScreen(),
     ),
     // GoRoute(
