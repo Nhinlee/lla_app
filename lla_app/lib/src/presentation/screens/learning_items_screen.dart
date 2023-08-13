@@ -45,8 +45,8 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
           child: Row(
             children: [
               Container(
-                width: 80,
-                height: 80,
+                width: 100,
+                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(8),
@@ -107,7 +107,7 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 8,
-        vertical: 4,
+        vertical: 8,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -122,8 +122,8 @@ class _LearningItemsScreenState extends State<LearningItemsScreen> {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: const TextField(
+          const Expanded(
+            child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
                 border: InputBorder.none,

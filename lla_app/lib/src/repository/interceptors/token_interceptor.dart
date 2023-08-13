@@ -9,17 +9,6 @@ class TokenInterceptors extends Interceptor {
 
   final Store<AppState> store;
 
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // final token = store.state.userState.identity.accessToken;
-    // if (token.isNotEmpty) {
-    //   options.headers.addAll({
-    //     'token': token,
-    //   });
-    // }
-
-    super.onRequest(options, handler);
-  }
 
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) {
