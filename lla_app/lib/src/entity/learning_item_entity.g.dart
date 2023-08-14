@@ -6,6 +6,82 @@ part of 'learning_item_entity.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+Serializer<LearningItemEntity> _$learningItemEntitySerializer =
+    new _$LearningItemEntitySerializer();
+
+class _$LearningItemEntitySerializer
+    implements StructuredSerializer<LearningItemEntity> {
+  @override
+  final Iterable<Type> types = const [LearningItemEntity, _$LearningItemEntity];
+  @override
+  final String wireName = 'LearningItemEntity';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, LearningItemEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'image_link',
+      serializers.serialize(object.imageLink,
+          specifiedType: const FullType(String)),
+      'english_word',
+      serializers.serialize(object.englishWord,
+          specifiedType: const FullType(String)),
+      'vietnamese_word',
+      serializers.serialize(object.vietnameseWord,
+          specifiedType: const FullType(String)),
+      'english_sentences',
+      serializers.serialize(object.englishSentences,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  LearningItemEntity deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new LearningItemEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'image_link':
+          result.imageLink = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'english_word':
+          result.englishWord = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'vietnamese_word':
+          result.vietnameseWord = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'english_sentences':
+          result.englishSentences.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$LearningItemEntity extends LearningItemEntity {
   @override
   final String id;

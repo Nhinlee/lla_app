@@ -1,9 +1,49 @@
 import 'package:lla_app/entity.dart';
 
 class AppRepo {
-  static late LLARepository repo;
+  static late AbstractRepository repo;
 }
 
-abstract class LLARepository {
+abstract class AbstractRepository {
   Future<List<LearningItemEntity>> getLearningItems();
+
+  Future<String> getResumableUploadUrl(
+    String fileName,
+  );
+
+  Future<void> uploadLearningItem(
+    LearningItemEntity learningItem,
+  );
+}
+
+class LLARepository extends AbstractRepository {
+  final AbstractRepository restRepo;
+
+  LLARepository({
+    required this.restRepo,
+  });
+
+  @override
+  Future<List<LearningItemEntity>> getLearningItems() {
+    // TODO: implement getLearningItems
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> getResumableUploadUrl(
+    String fileName,
+  ) {
+    return restRepo.getResumableUploadUrl(
+      fileName,
+    );
+  }
+
+  @override
+  Future<void> uploadLearningItem(
+    LearningItemEntity learningItem,
+  ) {
+    return restRepo.uploadLearningItem(
+      learningItem,
+    );
+  }
 }

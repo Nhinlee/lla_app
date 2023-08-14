@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lla_app/business.dart';
+import 'package:redux/redux.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class UploadLIScreen extends StatefulWidget {
+class UploadLIScreen<T extends AppState> extends StatefulWidget {
   const UploadLIScreen({
     Key? key,
     required this.imageFile,
@@ -13,21 +16,24 @@ class UploadLIScreen extends StatefulWidget {
   final XFile imageFile;
 
   @override
-  State<UploadLIScreen> createState() => _UploadLIScreenState();
+  State<UploadLIScreen> createState() => _UploadLIScreenState<T>();
 }
 
-class _UploadLIScreenState extends State<UploadLIScreen> {
+class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
   final _imagePicker = ImagePicker();
   final _englishTextController = TextEditingController();
   final _vietnameseTextController = TextEditingController();
 
   double _screenSize = 0.0;
 
+  late Store<T> _store;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     _screenSize = MediaQuery.of(context).size.width;
+    _store = StoreProvider.of<T>(context);
   }
 
   @override
@@ -91,10 +97,7 @@ class _UploadLIScreenState extends State<UploadLIScreen> {
   Widget buildSaveButton() {
     return InkWell(
       onTap: () {
-        onSaveImage(widget.imageFile);
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
+        onUploadLIItem(widget.imageFile);
       },
       child: Ink(
         padding: const EdgeInsets.all(16),
@@ -230,14 +233,17 @@ class _UploadLIScreenState extends State<UploadLIScreen> {
     );
   }
 
-  void onSaveImage(XFile imageFile) {
+  void onUploadLIItem(XFile imageFile) {
     final englishText = _englishTextController.text;
-    if (englishText.isEmpty) {
-      return;
-    }
+    final vietnameseText = _vietnameseTextController.text;
 
-    // TODO: Upload image and upsert to database
+    final action = UploadLIItemAction.create(
+      englishWord: englishText,
+      vietnameseWord: vietnameseText,
+    );
+    _store.dispatch(action);
 
     _englishTextController.clear();
+    _vietnameseTextController.clear();
   }
 }

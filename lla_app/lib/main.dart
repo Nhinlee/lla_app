@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:lla_app/presentation.dart';
 import 'package:lla_app/repository.dart';
 import 'package:lla_app/src/di/di.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_simple/redux_simple.dart';
 
 import 'business.dart';
@@ -27,6 +29,7 @@ void main() {
     initialState: appState,
     middleware: [
       HandlerMiddleware<AppState>(),
+      if (kDebugMode) LoggingMiddleware.printer(),
     ],
   );
 

@@ -18,7 +18,7 @@ void configureDependencies() => i.init(getIt);
 class AppInjector {
   Dio get dio => getIt.get<Dio>();
 
-  LLARepository get appRepository => getIt.get<LLARepository>();
+  AbstractRepository get appRepository => getIt.get<AbstractRepository>();
 }
 
 AppInjector getAppInjector() {

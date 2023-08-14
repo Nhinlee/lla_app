@@ -6,9 +6,13 @@ import 'package:lla_app/repository.dart';
 @module
 abstract class AppRepositoryModule {
   @singleton
-  LLARepository appRepository(Dio dio) {
-    return RestLLARepository(
-      dio: dio,
+  AbstractRepository appRepository(
+    Dio dio,
+  ) {
+    return LLARepository(
+      restRepo: RestLLARepository(
+        dio: dio,
+      ),
     );
   }
 }

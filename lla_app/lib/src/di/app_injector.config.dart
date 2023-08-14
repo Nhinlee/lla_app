@@ -31,7 +31,7 @@ _i1.GetIt init(
   final appRepositoryModule = _$AppRepositoryModule();
   gh.singleton<_i3.AppInjector>(_i3.AppInjector());
   gh.singleton<_i4.Dio>(serviceModule.appRepository());
-  gh.singleton<_i5.LLARepository>(
+  gh.singleton<_i5.AbstractRepository>(
       appRepositoryModule.appRepository(gh<_i4.Dio>()));
   return getIt;
 }
