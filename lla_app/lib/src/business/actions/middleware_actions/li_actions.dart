@@ -21,18 +21,21 @@ abstract class UploadLIItemAction extends Object
   Stream<AppState> call(
     Store<AppState> store,
   ) async* {
-    final resumableUploadUrl = await AppRepo.repo.getResumableUploadUrl(
-      "test-1.png",
+    final fileName = file.path.split('/').last;
+    final fileStoreUrl = await AppRepo.repo.getResumableUploadUrl(
+      fileName,
     );
 
     await AppRepo.repo.uploadFile(
       file,
-      resumableUploadUrl,
+      fileStoreUrl.resumableUploadUrl,
     );
 
-    // await AppRepo.repo.uploadLearningItem(
-    //   learningItem,
-    // );
+    await AppRepo.repo.uploadLearningItem(
+      learningItem.rebuild(
+        (p0) => p0..imageLink = fileStoreUrl.publicUrl,
+      ),
+    );
   }
 
   factory UploadLIItemAction.create({

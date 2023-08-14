@@ -7,6 +7,7 @@ part 'serializes.g.dart';
 
 @SerializersFor([
   LearningItemEntity,
+  FileStoreURL,
 ])
 final Serializers appSerializers =
     (_$appSerializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

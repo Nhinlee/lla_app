@@ -7,6 +7,7 @@ part of 'serializes.dart';
 // **************************************************************************
 
 Serializers _$appSerializers = (new Serializers().toBuilder()
+      ..add(FileStoreURL.serializer)
       ..add(LearningItemEntity.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),

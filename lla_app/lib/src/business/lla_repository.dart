@@ -9,7 +9,7 @@ class AppRepo {
 abstract class AbstractRepository {
   Future<List<LearningItemEntity>> getLearningItems();
 
-  Future<String> getResumableUploadUrl(
+  Future<FileStoreURL> getResumableUploadUrl(
     String fileName,
   );
 
@@ -37,7 +37,7 @@ class LLARepository extends AbstractRepository {
   }
 
   @override
-  Future<String> getResumableUploadUrl(
+  Future<FileStoreURL> getResumableUploadUrl(
     String fileName,
   ) {
     return restRepo.getResumableUploadUrl(

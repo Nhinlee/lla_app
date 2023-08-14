@@ -12,7 +12,7 @@ abstract class LearningItemEntity
 
   String get id;
 
-  @BuiltValueField(wireName: 'image_link')
+  @BuiltValueField(wireName: 'image_url')
   String get imageLink;
 
   @BuiltValueField(wireName: 'english_word')
@@ -24,7 +24,6 @@ abstract class LearningItemEntity
   @BuiltValueField(wireName: 'english_sentences')
   BuiltList<String> get englishSentences;
 
-  // to json function
   Map<String, dynamic> toJson() {
     return appSerializers.serializeWith(
       LearningItemEntity.serializer,
@@ -32,7 +31,6 @@ abstract class LearningItemEntity
     ) as Map<String, dynamic>;
   }
 
-  // from json function
   static LearningItemEntity? fromJson(Map<String, dynamic> json) {
     return appSerializers.deserializeWith(
       LearningItemEntity.serializer,

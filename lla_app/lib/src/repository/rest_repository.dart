@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:lla_app/business.dart';
+import 'package:lla_app/entity.dart';
 import 'package:lla_app/repository.dart';
 import 'package:lla_app/src/entity/learning_item_entity.dart';
 import 'package:mime/mime.dart';
@@ -30,7 +31,7 @@ class RestLLARepository implements AbstractRepository {
   }
 
   @override
-  Future<String> getResumableUploadUrl(
+  Future<FileStoreURL> getResumableUploadUrl(
     String fileName,
   ) async {
     final body = {
@@ -42,7 +43,7 @@ class RestLLARepository implements AbstractRepository {
       data: body,
     );
 
-    return resp.data['presigned_url'];
+    return FileStoreURL.fromJson(resp.data) ?? FileStoreURL();
   }
 
   @override
