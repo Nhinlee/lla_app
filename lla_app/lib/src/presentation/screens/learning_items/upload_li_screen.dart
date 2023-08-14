@@ -240,6 +240,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
     final action = UploadLIItemAction.create(
       englishWord: englishText,
       vietnameseWord: vietnameseText,
+      file: File(imageFile.path),
     );
     _store.dispatch(action);
 

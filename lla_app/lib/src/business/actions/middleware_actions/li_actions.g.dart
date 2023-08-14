@@ -10,6 +10,8 @@ class _$UploadLIItemAction extends UploadLIItemAction {
   @override
   final LearningItemEntity learningItem;
   @override
+  final File file;
+  @override
   final Status? afterSuccessStatus;
   @override
   final Status? afterErrorStatus;
@@ -20,11 +22,13 @@ class _$UploadLIItemAction extends UploadLIItemAction {
 
   _$UploadLIItemAction._(
       {required this.learningItem,
+      required this.file,
       this.afterSuccessStatus,
       this.afterErrorStatus})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         learningItem, r'UploadLIItemAction', 'learningItem');
+    BuiltValueNullFieldError.checkNotNull(file, r'UploadLIItemAction', 'file');
   }
 
   @override
@@ -41,6 +45,7 @@ class _$UploadLIItemAction extends UploadLIItemAction {
     if (identical(other, this)) return true;
     return other is UploadLIItemAction &&
         learningItem == other.learningItem &&
+        file == other.file &&
         afterSuccessStatus == other.afterSuccessStatus &&
         afterErrorStatus == other.afterErrorStatus;
   }
@@ -49,6 +54,7 @@ class _$UploadLIItemAction extends UploadLIItemAction {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, learningItem.hashCode);
+    _$hash = $jc(_$hash, file.hashCode);
     _$hash = $jc(_$hash, afterSuccessStatus.hashCode);
     _$hash = $jc(_$hash, afterErrorStatus.hashCode);
     _$hash = $jf(_$hash);
@@ -59,6 +65,7 @@ class _$UploadLIItemAction extends UploadLIItemAction {
   String toString() {
     return (newBuiltValueToStringHelper(r'UploadLIItemAction')
           ..add('learningItem', learningItem)
+          ..add('file', file)
           ..add('afterSuccessStatus', afterSuccessStatus)
           ..add('afterErrorStatus', afterErrorStatus))
         .toString();
@@ -76,6 +83,10 @@ class UploadLIItemActionBuilder
       _$this._learningItem ??= new LearningItemEntityBuilder();
   set learningItem(covariant LearningItemEntityBuilder? learningItem) =>
       _$this._learningItem = learningItem;
+
+  File? _file;
+  File? get file => _$this._file;
+  set file(covariant File? file) => _$this._file = file;
 
   StatusBuilder? _afterSuccessStatus;
   StatusBuilder get afterSuccessStatus =>
@@ -95,6 +106,7 @@ class UploadLIItemActionBuilder
     final $v = _$v;
     if ($v != null) {
       _learningItem = $v.learningItem.toBuilder();
+      _file = $v.file;
       _afterSuccessStatus = $v.afterSuccessStatus?.toBuilder();
       _afterErrorStatus = $v.afterErrorStatus?.toBuilder();
       _$v = null;
@@ -122,6 +134,8 @@ class UploadLIItemActionBuilder
       _$result = _$v ??
           new _$UploadLIItemAction._(
               learningItem: learningItem.build(),
+              file: BuiltValueNullFieldError.checkNotNull(
+                  file, r'UploadLIItemAction', 'file'),
               afterSuccessStatus: _afterSuccessStatus?.build(),
               afterErrorStatus: _afterErrorStatus?.build());
     } catch (_) {
@@ -129,6 +143,7 @@ class UploadLIItemActionBuilder
       try {
         _$failedField = 'learningItem';
         learningItem.build();
+
         _$failedField = 'afterSuccessStatus';
         _afterSuccessStatus?.build();
         _$failedField = 'afterErrorStatus';

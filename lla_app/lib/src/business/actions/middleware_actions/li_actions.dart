@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:built_value/built_value.dart';
 import 'package:lla_app/business.dart';
 import 'package:lla_app/entity.dart';
@@ -13,6 +15,8 @@ abstract class UploadLIItemAction extends Object
         Built<UploadLIItemAction, UploadLIItemActionBuilder> {
   LearningItemEntity get learningItem;
 
+  File get file;
+
   @override
   Stream<AppState> call(
     Store<AppState> store,
@@ -21,7 +25,10 @@ abstract class UploadLIItemAction extends Object
       "test-1.png",
     );
 
-    print(">> resumableUploadUrl: $resumableUploadUrl");
+    await AppRepo.repo.uploadFile(
+      file,
+      resumableUploadUrl,
+    );
 
     // await AppRepo.repo.uploadLearningItem(
     //   learningItem,
@@ -31,6 +38,7 @@ abstract class UploadLIItemAction extends Object
   factory UploadLIItemAction.create({
     required String englishWord,
     required String vietnameseWord,
+    required File file,
   }) {
     return UploadLIItemAction(
       (updates) => updates
@@ -38,7 +46,8 @@ abstract class UploadLIItemAction extends Object
           (b) => b
             ..englishWord = englishWord
             ..vietnameseWord = vietnameseWord,
-        ).toBuilder(),
+        ).toBuilder()
+        ..file = file,
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:lla_app/entity.dart';
 
 class AppRepo {
@@ -9,6 +11,11 @@ abstract class AbstractRepository {
 
   Future<String> getResumableUploadUrl(
     String fileName,
+  );
+
+  Future<void> uploadFile(
+    File file,
+    String resumableUploadUrl,
   );
 
   Future<void> uploadLearningItem(
@@ -44,6 +51,17 @@ class LLARepository extends AbstractRepository {
   ) {
     return restRepo.uploadLearningItem(
       learningItem,
+    );
+  }
+
+  @override
+  Future<void> uploadFile(
+    File file,
+    String resumableUploadUrl,
+  ) {
+    return restRepo.uploadFile(
+      file,
+      resumableUploadUrl,
     );
   }
 }
