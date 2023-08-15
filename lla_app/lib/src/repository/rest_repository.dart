@@ -14,8 +14,21 @@ class RestLLARepository implements AbstractRepository {
   });
 
   @override
-  Future<List<LearningItemEntity>> getLearningItems() {
-    throw UnimplementedError();
+  Future<List<LearningItemEntity>> getLearningItems() async {
+    final resp = await dio.get(
+      RestApis.learningItems,
+    );
+
+    final learningItems = <LearningItemEntity>[];
+    final listData = resp.data as List<dynamic>;
+    for (final item in listData) {
+      final learningItem = LearningItemEntity.fromJson(item);
+      if (learningItem != null) {
+        learningItems.add(learningItem);
+      }
+    }
+
+    return learningItems;
   }
 
   @override

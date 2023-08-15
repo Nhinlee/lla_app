@@ -8,12 +8,15 @@ part of 'state.dart';
 
 class _$AppState extends AppState {
   @override
+  final LearningItemState liState;
+  @override
   final BuiltMap<String, Status> statuses;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
 
-  _$AppState._({required this.statuses}) : super._() {
+  _$AppState._({required this.liState, required this.statuses}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(liState, r'AppState', 'liState');
     BuiltValueNullFieldError.checkNotNull(statuses, r'AppState', 'statuses');
   }
 
@@ -27,12 +30,15 @@ class _$AppState extends AppState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AppState && statuses == other.statuses;
+    return other is AppState &&
+        liState == other.liState &&
+        statuses == other.statuses;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, liState.hashCode);
     _$hash = $jc(_$hash, statuses.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -40,14 +46,25 @@ class _$AppState extends AppState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'AppState')..add('statuses', statuses))
+    return (newBuiltValueToStringHelper(r'AppState')
+          ..add('liState', liState)
+          ..add('statuses', statuses))
         .toString();
   }
 }
 
 class AppStateBuilder
-    implements Builder<AppState, AppStateBuilder>, StatusStateBuilder {
+    implements
+        Builder<AppState, AppStateBuilder>,
+        AbstractLIFeatureBuilder,
+        StatusStateBuilder {
   _$AppState? _$v;
+
+  LearningItemStateBuilder? _liState;
+  LearningItemStateBuilder get liState =>
+      _$this._liState ??= new LearningItemStateBuilder();
+  set liState(covariant LearningItemStateBuilder? liState) =>
+      _$this._liState = liState;
 
   MapBuilder<String, Status>? _statuses;
   MapBuilder<String, Status> get statuses =>
@@ -60,6 +77,7 @@ class AppStateBuilder
   AppStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _liState = $v.liState.toBuilder();
       _statuses = $v.statuses.toBuilder();
       _$v = null;
     }
@@ -67,6 +85,7 @@ class AppStateBuilder
   }
 
   @override
+// ignore: override_on_non_overriding_method
   void replace(covariant AppState other) {
     ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AppState;
@@ -83,10 +102,14 @@ class AppStateBuilder
   _$AppState _build() {
     _$AppState _$result;
     try {
-      _$result = _$v ?? new _$AppState._(statuses: statuses.build());
+      _$result = _$v ??
+          new _$AppState._(
+              liState: liState.build(), statuses: statuses.build());
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'liState';
+        liState.build();
         _$failedField = 'statuses';
         statuses.build();
       } catch (e) {

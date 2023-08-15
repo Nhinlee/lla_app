@@ -62,3 +62,33 @@ abstract class UploadLIItemAction extends Object
           [void Function(UploadLIItemActionBuilder) updates]) =
       _$UploadLIItemAction;
 }
+
+abstract class GetLIItemsAction extends Object
+    with GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<GetLIItemsAction, GetLIItemsActionBuilder> {
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    final learningItems = await AppRepo.repo.getLearningItems();
+
+    Map<String, LearningItemEntity> learningItemsMap = {};
+    for (var e in learningItems) {
+      learningItemsMap[e.id] = e;
+    }
+
+    print('>>> learningItemsMap: ');
+    print(learningItemsMap);
+
+    yield store.state.rebuild(
+      (b) => b.liState..learningItems = MapBuilder(learningItemsMap),
+    );
+  }
+
+  GetLIItemsAction._();
+
+  factory GetLIItemsAction([void Function(GetLIItemsActionBuilder) updates]) =
+      _$GetLIItemsAction;
+}

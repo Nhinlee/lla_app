@@ -32,8 +32,7 @@ class LLARepository extends AbstractRepository {
 
   @override
   Future<List<LearningItemEntity>> getLearningItems() {
-    // TODO: implement getLearningItems
-    throw UnimplementedError();
+    return restRepo.getLearningItems();
   }
 
   @override

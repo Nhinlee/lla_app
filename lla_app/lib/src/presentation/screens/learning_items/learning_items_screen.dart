@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lla_app/business.dart';
 import 'package:lla_app/presentation.dart';
+import 'package:redux/redux.dart';
 
-class LearningItemsScreen extends StatefulWidget {
+class LearningItemsScreen<T extends AppState> extends StatefulWidget {
   const LearningItemsScreen({Key? key}) : super(key: key);
 
   @override
-  State<LearningItemsScreen> createState() => _LearningItemsScreenState();
+  State<LearningItemsScreen> createState() => _LearningItemsScreenState<T>();
 }
 
-class _LearningItemsScreenState extends State<LearningItemsScreen> {
+class _LearningItemsScreenState<T extends AppState>
+    extends State<LearningItemsScreen> {
   final _imagePicker = ImagePicker();
+
+  late Store<T> _store;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _store = StoreProvider.of<T>(context);
+
+    // TODO: just for test
+    final action = GetLIItemsAction();
+    _store.dispatch(action);
+  }
 
   @override
   Widget build(BuildContext context) {
