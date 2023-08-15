@@ -130,7 +130,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: Text(
                 'Sentences',
                 style: TextStyle(
@@ -155,7 +155,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
                     Colors.purple,
                     Colors.purple.shade300,
                   ],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -174,7 +174,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
                     color: Colors.purple,
                   ),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   color: Colors.purple,
                 ),
@@ -209,7 +209,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.delete,
               color: Colors.red,
               size: 32,
@@ -224,7 +224,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
     String? labelText,
   }) {
     return InputDecoration(
-      border: OutlineInputBorder(
+      border: const OutlineInputBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(8),
         ),

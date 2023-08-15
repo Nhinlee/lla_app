@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:lla_app/business.dart';
 import 'package:lla_app/entity.dart';
 import 'package:lla_app/repository.dart';
-import 'package:lla_app/src/entity/learning_item_entity.dart';
 import 'package:mime/mime.dart';
 
 class RestLLARepository implements AbstractRepository {

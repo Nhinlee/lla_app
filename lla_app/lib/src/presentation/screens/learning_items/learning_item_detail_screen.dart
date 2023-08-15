@@ -65,9 +65,9 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
     return Container(
       width: _screenWidth,
       height: _screenWidth,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.purple,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 16,

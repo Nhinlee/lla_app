@@ -16,7 +16,7 @@ class _LLAAppState extends State<LLAApp> {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         primaryColor: Colors.purple,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.purple,
           shadowColor: Colors.transparent,
