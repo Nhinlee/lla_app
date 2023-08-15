@@ -23,7 +23,7 @@ class _$LearningItemEntitySerializer
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'image_url',
+      'image_link',
       serializers.serialize(object.imageLink,
           specifiedType: const FullType(String)),
       'english_word',
@@ -57,7 +57,7 @@ class _$LearningItemEntitySerializer
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'image_url':
+        case 'image_link':
           result.imageLink = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;

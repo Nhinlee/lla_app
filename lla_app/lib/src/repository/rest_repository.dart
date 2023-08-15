@@ -32,14 +32,17 @@ class RestLLARepository implements AbstractRepository {
   }
 
   @override
-  Future<void> uploadLearningItem(
+  Future<String> uploadLearningItem(
     LearningItemEntity learningItem,
-  ) {
+  ) async {
     final body = learningItem.toJson();
-    return dio.post(
+    final resp = await dio.post(
       RestApis.learningItems,
       data: body,
     );
+
+    // Return new li ID
+    return resp.data['id'];
   }
 
   @override

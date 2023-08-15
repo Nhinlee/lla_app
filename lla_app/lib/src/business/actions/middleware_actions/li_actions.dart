@@ -31,13 +31,26 @@ abstract class UploadLIItemAction extends Object
       fileStoreUrl.resumableUploadUrl,
     );
 
-    await AppRepo.repo.uploadLearningItem(
+    final newLearningItemId = await AppRepo.repo.uploadLearningItem(
       learningItem.rebuild(
         (p0) => p0..imageLink = fileStoreUrl.publicUrl,
       ),
     );
 
-    yield store.state;
+    final liState = store.state.liState.rebuild(
+      (p0) => p0
+        ..learningItems.addAll({
+          learningItem.id: learningItem.rebuild(
+            (p0) => p0
+              ..id = newLearningItemId
+              ..imageLink = fileStoreUrl.publicUrl,
+          ),
+        }),
+    );
+
+    yield store.state.rebuild(
+      (p0) => p0..liState = liState.toBuilder(),
+    );
   }
 
   factory UploadLIItemAction.create({

@@ -1,8 +1,10 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lla_app/business.dart';
+import 'package:lla_app/entity.dart';
 import 'package:lla_app/presentation.dart';
 import 'package:redux/redux.dart';
 
@@ -55,65 +57,89 @@ class _LearningItemsScreenState<T extends AppState>
     );
   }
 
-  ListView buildLearningItemsContainer() {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () => navigateToLearningItemDetailScreen(
-            index.toString(),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
-            child: Row(
-              children: [
-                Hero(
-                  tag: "learning_item_$index",
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(0, 4),
-                          blurRadius: 16,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Learning Item $index',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Subtitle',
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 16,
-                ),
-              ],
-            ),
-          ),
-        );
+  Widget buildLearningItemsContainer() {
+    return StoreConnector<AppState, BuiltList<LearningItemEntity>>(
+      builder: (context, liItems) => ListView.builder(
+        itemCount: liItems.length,
+        itemBuilder: (context, index) {
+          return buildLIItemWidget(
+            index,
+            context,
+            liItems[index],
+          );
+        },
+      ),
+      converter: (store) {
+        return store.state.liState.learningItems.values.toBuiltList();
       },
+    );
+  }
+
+  InkWell buildLIItemWidget(
+    int index,
+    BuildContext context,
+    LearningItemEntity learningItem,
+  ) {
+    return InkWell(
+      onTap: () => navigateToLearningItemDetailScreen(
+        learningItem.id,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
+        child: Row(
+          children: [
+            Hero(
+              tag: "learning_item_${learningItem.id}",
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      offset: Offset(0, 4),
+                      blurRadius: 16,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    learningItem.imageLink,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    learningItem.englishWord,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    learningItem.vietnameseWord,
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 16,
+            ),
+          ],
+        ),
+      ),
     );
   }
 

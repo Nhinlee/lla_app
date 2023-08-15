@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lla_app/business.dart';
+import 'package:lla_app/entity.dart';
 import 'package:lla_app/presentation.dart';
+import 'package:redux/redux.dart';
 
-class LearningItemDetailScreen extends StatefulWidget {
+class LearningItemDetailScreen<T extends AppState> extends StatefulWidget {
   const LearningItemDetailScreen({Key? key}) : super(key: key);
 
   @override
   State<LearningItemDetailScreen> createState() =>
-      _LearningItemDetailScreenState();
+      _LearningItemDetailScreenState<T>();
 }
 
-class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
+class _LearningItemDetailScreenState<T extends AppState>
+    extends State<LearningItemDetailScreen> {
   double _screenWidth = 0;
   String _learningItemId = "";
+
+  late Store<T> _store;
+  late LearningItemEntity _learningItem;
 
   final _englishSentences = [
     "The wind acted like a hairdryer, playing with her hair.",
@@ -30,6 +38,13 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
     // Get query parameters
     final queryParameters = GoRouterState.of(context).uri.queryParameters;
     _learningItemId = queryParameters[ParamKeys.learningItemId] ?? "";
+
+    // Get store
+    _store = StoreProvider.of<T>(context);
+    print("learning_item_detail_screen.dart: didChangeDependencies: "
+        "_learningItemId: ${_store.state.liState.learningItems}");
+    _learningItem = _store.state.liState.learningItems[_learningItemId] ??
+        LearningItemEntity();
   }
 
   @override
@@ -66,14 +81,11 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
       width: _screenWidth,
       height: _screenWidth,
       decoration: const BoxDecoration(
-        color: Colors.purple,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 16,
-            offset: Offset(0, 4),
-          ),
-        ],
+        color: Colors.white,
+      ),
+      child: Image.network(
+        _learningItem.imageLink,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -83,12 +95,12 @@ class _LearningItemDetailScreenState extends State<LearningItemDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Learning Item Title',
+          _learningItem.englishWord,
           style: Theme.of(context).textTheme.headline6,
         ),
         const SizedBox(height: 16),
         Text(
-          'Learning Item Description',
+          _learningItem.vietnameseWord,
           style: Theme.of(context).textTheme.bodyText2,
         ),
       ],

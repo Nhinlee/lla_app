@@ -12,7 +12,7 @@ abstract class LearningItemEntity
 
   String get id;
 
-  @BuiltValueField(wireName: 'image_url')
+  @BuiltValueField(wireName: 'image_link')
   String get imageLink;
 
   @BuiltValueField(wireName: 'english_word')

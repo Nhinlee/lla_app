@@ -18,7 +18,7 @@ abstract class AbstractRepository {
     String resumableUploadUrl,
   );
 
-  Future<void> uploadLearningItem(
+  Future<String> uploadLearningItem(
     LearningItemEntity learningItem,
   );
 }
@@ -45,7 +45,7 @@ class LLARepository extends AbstractRepository {
   }
 
   @override
-  Future<void> uploadLearningItem(
+  Future<String> uploadLearningItem(
     LearningItemEntity learningItem,
   ) {
     return restRepo.uploadLearningItem(
