@@ -2,9 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lla_app/business.dart';
+import 'package:lla_app/presentation.dart';
+import 'package:lla_app/src/presentation/container/app_status_container.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_simple/redux_simple.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class UploadLIScreen<T extends AppState> extends StatefulWidget {
@@ -20,19 +24,19 @@ class UploadLIScreen<T extends AppState> extends StatefulWidget {
 }
 
 class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
-  final _imagePicker = ImagePicker();
   final _englishTextController = TextEditingController();
   final _vietnameseTextController = TextEditingController();
 
-  double _screenSize = 0.0;
+  late Size _screenSize;
 
   late Store<T> _store;
+  String _uploadLIItemStatusId = '';
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _screenSize = MediaQuery.of(context).size.width;
+    _screenSize = MediaQuery.of(context).size;
     _store = StoreProvider.of<T>(context);
   }
 
@@ -49,23 +53,51 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
   }
 
   Widget buildBody(XFile imageFile) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.file(
-            File(imageFile.path),
-            width: _screenSize,
-            height: _screenSize,
-            fit: BoxFit.cover,
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.file(
+                File(imageFile.path),
+                width: _screenSize.width,
+                height: _screenSize.width,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: buildTextFormContainer(),
+              ),
+            ],
           ),
-          const SizedBox(height: 32),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: buildTextFormContainer(),
-          ),
-        ],
-      ),
+        ),
+        AppStatusListener(
+          statusId: _uploadLIItemStatusId,
+          onSuccess: (status) {
+            if (mounted) {
+              context.pop();
+            }
+          },
+          builder: (status) {
+            if (status.loading == LoadingStatus.loading) {
+              return buildLoadingContainer();
+            }
+
+            return const SizedBox.shrink();
+          },
+        )
+      ],
+    );
+  }
+
+  Widget buildLoadingContainer() {
+    return Container(
+      width: _screenSize.width,
+      height: _screenSize.height,
+      color: Colors.black.withOpacity(0.2),
+      child: const AppCircleLoading(),
     );
   }
 
@@ -242,6 +274,9 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
       vietnameseWord: vietnameseText,
       file: File(imageFile.path),
     );
+    setState(() {
+      _uploadLIItemStatusId = action.statusId;
+    });
     _store.dispatch(action);
 
     _englishTextController.clear();

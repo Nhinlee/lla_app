@@ -36,6 +36,8 @@ abstract class UploadLIItemAction extends Object
         (p0) => p0..imageLink = fileStoreUrl.publicUrl,
       ),
     );
+
+    yield store.state;
   }
 
   factory UploadLIItemAction.create({
