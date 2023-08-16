@@ -37,19 +37,15 @@ abstract class UploadLIItemAction extends Object
       ),
     );
 
-    final liState = store.state.liState.rebuild(
-      (p0) => p0
+    yield store.state.rebuild(
+      (b) => b.liState
         ..learningItems.addAll({
-          learningItem.id: learningItem.rebuild(
+          newLearningItemId: learningItem.rebuild(
             (p0) => p0
               ..id = newLearningItemId
               ..imageLink = fileStoreUrl.publicUrl,
           ),
         }),
-    );
-
-    yield store.state.rebuild(
-      (p0) => p0..liState = liState.toBuilder(),
     );
   }
 
@@ -91,9 +87,6 @@ abstract class GetLIItemsAction extends Object
     for (var e in learningItems) {
       learningItemsMap[e.id] = e;
     }
-
-    print('>>> learningItemsMap: ');
-    print(learningItemsMap);
 
     yield store.state.rebuild(
       (b) => b.liState..learningItems = MapBuilder(learningItemsMap),
