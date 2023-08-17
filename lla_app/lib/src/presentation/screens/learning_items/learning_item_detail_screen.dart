@@ -105,7 +105,9 @@ class _LearningItemDetailScreenState<T extends AppState>
       children: [
         Text(
           learningItem.englishWord,
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.headline6?.copyWith(
+                color: Colors.purple,
+              ),
         ),
         const SizedBox(height: 16),
         Text(

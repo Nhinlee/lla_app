@@ -58,20 +58,26 @@ class _LearningItemsScreenState<T extends AppState>
   }
 
   Widget buildLearningItemsContainer() {
-    return StoreConnector<AppState, BuiltList<LearningItemEntity>>(
-      builder: (context, liItems) => ListView.builder(
-        itemCount: liItems.length,
-        itemBuilder: (context, index) {
-          return buildLIItemWidget(
-            index,
-            context,
-            liItems[index],
-          );
+    return RefreshIndicator(
+      onRefresh: () async {
+        final action = GetLIItemsAction();
+        _store.dispatch(action);
+      },
+      child: StoreConnector<AppState, BuiltList<LearningItemEntity>>(
+        builder: (context, liItems) => ListView.builder(
+          itemCount: liItems.length,
+          itemBuilder: (context, index) {
+            return buildLIItemWidget(
+              index,
+              context,
+              liItems[index],
+            );
+          },
+        ),
+        converter: (store) {
+          return store.state.liState.learningItems.values.toBuiltList();
         },
       ),
-      converter: (store) {
-        return store.state.liState.learningItems.values.toBuiltList();
-      },
     );
   }
 
@@ -123,7 +129,9 @@ class _LearningItemsScreenState<T extends AppState>
                 children: [
                   Text(
                     learningItem.englishWord,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.headline6?.copyWith(
+                          color: Colors.purple,
+                        ),
                   ),
                   const SizedBox(height: 4),
                   Text(
