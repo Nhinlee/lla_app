@@ -25,7 +25,7 @@ abstract class GetAllTopicsAction extends Object
     }
 
     yield store.state.rebuild(
-      (updates) => updates..topicState.topics = MapBuilder(topicsMap),
+      (updates) => updates.topicState..topics = MapBuilder(topicsMap),
     );
   }
 

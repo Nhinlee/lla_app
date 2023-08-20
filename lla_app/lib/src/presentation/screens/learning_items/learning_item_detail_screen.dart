@@ -37,7 +37,6 @@ class _LearningItemDetailScreenState<T extends AppState>
     // Get query parameters
     final queryParameters = GoRouterState.of(context).uri.queryParameters;
     _learningItemId = queryParameters[ParamKeys.learningItemId] ?? "";
-    print(">>> _learningItemId: $_learningItemId");
 
     // Get store
     _store = StoreProvider.of<T>(context);
@@ -49,6 +48,14 @@ class _LearningItemDetailScreenState<T extends AppState>
       appBar: AppBar(
         automaticallyImplyLeading: true,
         shadowColor: Colors.transparent,
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       GoRouter.of(context).go("/");
+        //     },
+        //     icon: const Icon(Icons.delete),
+        //   ),
+        // ],
       ),
       body: StoreConnector<T, LearningItemEntity>(
         converter: (store) =>
@@ -71,6 +78,7 @@ class _LearningItemDetailScreenState<T extends AppState>
                     learningItem,
                   ),
                 ),
+                // Build topic chip
                 const SizedBox(height: 24),
                 // list of english sentences widget
                 ...buildEnglishSentencesWidget(learningItem),
@@ -82,7 +90,28 @@ class _LearningItemDetailScreenState<T extends AppState>
     );
   }
 
-  Container buildLIImageContainer(LearningItemEntity learningItem) {
+  Widget buildTopicChip(LearningItemEntity learningItem) {
+    final topics = _store.state.topicState.topics;
+    final topicName = topics[learningItem.topicId]?.name ?? "";
+    return topicName != ""
+        ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Material(
+              child: Chip(
+                label: Text(
+                  topicName,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                backgroundColor: Colors.purple,
+              ),
+            ),
+          )
+        : const SizedBox();
+  }
+
+  Widget buildLIImageContainer(LearningItemEntity learningItem) {
     return Container(
       width: _screenWidth,
       height: _screenWidth,
@@ -103,13 +132,25 @@ class _LearningItemDetailScreenState<T extends AppState>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          learningItem.englishWord,
-          style: Theme.of(context).textTheme.headline6?.copyWith(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              learningItem.englishWord,
+              style: Theme.of(context).textTheme.headline5?.copyWith(
+                    color: Colors.purple,
+                  ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.edit,
                 color: Colors.purple,
               ),
+            ),
+          ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 4),
         Text(
           learningItem.vietnameseWord,
           style: Theme.of(context).textTheme.bodyText2,

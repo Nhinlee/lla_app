@@ -36,6 +36,9 @@ class _$LearningItemEntitySerializer
       serializers.serialize(object.englishSentences,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
+      'topic_id',
+      serializers.serialize(object.topicId,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -75,6 +78,10 @@ class _$LearningItemEntitySerializer
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'topic_id':
+          result.topicId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
       }
     }
 
@@ -93,6 +100,10 @@ class _$LearningItemEntity extends LearningItemEntity {
   final String vietnameseWord;
   @override
   final BuiltList<String> englishSentences;
+  @override
+  final String topicId;
+  @override
+  final DateTime createdAt;
 
   factory _$LearningItemEntity(
           [void Function(LearningItemEntityBuilder)? updates]) =>
@@ -103,7 +114,9 @@ class _$LearningItemEntity extends LearningItemEntity {
       required this.imageLink,
       required this.englishWord,
       required this.vietnameseWord,
-      required this.englishSentences})
+      required this.englishSentences,
+      required this.topicId,
+      required this.createdAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'LearningItemEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -114,6 +127,10 @@ class _$LearningItemEntity extends LearningItemEntity {
         vietnameseWord, r'LearningItemEntity', 'vietnameseWord');
     BuiltValueNullFieldError.checkNotNull(
         englishSentences, r'LearningItemEntity', 'englishSentences');
+    BuiltValueNullFieldError.checkNotNull(
+        topicId, r'LearningItemEntity', 'topicId');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'LearningItemEntity', 'createdAt');
   }
 
   @override
@@ -133,7 +150,9 @@ class _$LearningItemEntity extends LearningItemEntity {
         imageLink == other.imageLink &&
         englishWord == other.englishWord &&
         vietnameseWord == other.vietnameseWord &&
-        englishSentences == other.englishSentences;
+        englishSentences == other.englishSentences &&
+        topicId == other.topicId &&
+        createdAt == other.createdAt;
   }
 
   @override
@@ -144,6 +163,8 @@ class _$LearningItemEntity extends LearningItemEntity {
     _$hash = $jc(_$hash, englishWord.hashCode);
     _$hash = $jc(_$hash, vietnameseWord.hashCode);
     _$hash = $jc(_$hash, englishSentences.hashCode);
+    _$hash = $jc(_$hash, topicId.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -155,7 +176,9 @@ class _$LearningItemEntity extends LearningItemEntity {
           ..add('imageLink', imageLink)
           ..add('englishWord', englishWord)
           ..add('vietnameseWord', vietnameseWord)
-          ..add('englishSentences', englishSentences))
+          ..add('englishSentences', englishSentences)
+          ..add('topicId', topicId)
+          ..add('createdAt', createdAt))
         .toString();
   }
 }
@@ -187,6 +210,14 @@ class LearningItemEntityBuilder
   set englishSentences(ListBuilder<String>? englishSentences) =>
       _$this._englishSentences = englishSentences;
 
+  String? _topicId;
+  String? get topicId => _$this._topicId;
+  set topicId(String? topicId) => _$this._topicId = topicId;
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _$this._createdAt;
+  set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
+
   LearningItemEntityBuilder() {
     LearningItemEntity._initializeBuilder(this);
   }
@@ -199,6 +230,8 @@ class LearningItemEntityBuilder
       _englishWord = $v.englishWord;
       _vietnameseWord = $v.vietnameseWord;
       _englishSentences = $v.englishSentences.toBuilder();
+      _topicId = $v.topicId;
+      _createdAt = $v.createdAt;
       _$v = null;
     }
     return this;
@@ -231,7 +264,11 @@ class LearningItemEntityBuilder
                   englishWord, r'LearningItemEntity', 'englishWord'),
               vietnameseWord: BuiltValueNullFieldError.checkNotNull(
                   vietnameseWord, r'LearningItemEntity', 'vietnameseWord'),
-              englishSentences: englishSentences.build());
+              englishSentences: englishSentences.build(),
+              topicId: BuiltValueNullFieldError.checkNotNull(
+                  topicId, r'LearningItemEntity', 'topicId'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(
+                  createdAt, r'LearningItemEntity', 'createdAt'));
     } catch (_) {
       late String _$failedField;
       try {

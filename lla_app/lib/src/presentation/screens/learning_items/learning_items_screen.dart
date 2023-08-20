@@ -27,7 +27,14 @@ class _LearningItemsScreenState<T extends AppState>
 
     _store = StoreProvider.of<T>(context);
 
-    // TODO: just for test
+    onRefreshData();
+  }
+
+  void onRefreshData() {
+    // Get all topcis
+    _store.dispatch(GetAllTopicsAction());
+
+    // Get all LI items
     final action = GetLIItemsAction();
     _store.dispatch(action);
   }
@@ -60,8 +67,7 @@ class _LearningItemsScreenState<T extends AppState>
   Widget buildLearningItemsContainer() {
     return RefreshIndicator(
       onRefresh: () async {
-        final action = GetLIItemsAction();
-        _store.dispatch(action);
+        onRefreshData();
       },
       child: StoreConnector<AppState, BuiltList<LearningItemEntity>>(
         builder: (context, liItems) => ListView.builder(
