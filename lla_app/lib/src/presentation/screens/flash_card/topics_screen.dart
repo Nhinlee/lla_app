@@ -16,18 +16,18 @@ class TopicsScreen<T extends AppState> extends StatefulWidget {
 class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
   final bgColorList = [
     Colors.purple,
-    Color(0xFFDB6D6D),
-    Color(0xFFE7B768),
+    const Color(0xFFDB6D6D),
+    const Color(0xFFE7B768),
   ];
 
   final overlayColorList = [
-    Color(0xFFFDCC4A).withOpacity(0.8),
-    Color(0xFF7CC6D6),
-    Color(0xFF858C94),
+    const Color(0xFFFDCC4A).withOpacity(0.8),
+    const Color(0xFF7CC6D6),
+    const Color(0xFF858C94),
   ];
 
   late Size _screenSize;
-  late Store<T> store;
+  late Store<T> _store;
   String _statusId = "";
 
   @override
@@ -35,7 +35,7 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
     super.didChangeDependencies();
 
     _screenSize = MediaQuery.of(context).size;
-    store = StoreProvider.of<T>(context);
+    _store = StoreProvider.of<T>(context);
 
     onRefreshData();
   }
@@ -45,7 +45,7 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
     setState(() {
       _statusId = action.statusId;
     });
-    store.dispatch(action);
+    _store.dispatch(action);
   }
 
   @override
@@ -54,10 +54,10 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
       onRefresh: () => onRefreshData(),
       child: AppStatusListener(
         statusId: _statusId,
-        loadingPlaceHolder: AppCircleLoading(),
+        loadingPlaceHolder: const AppCircleLoading(),
         builder: (status) {
-          final topics = store.state.topicState.topics.values.toList();
-          final totalLIByTopicIds = store.state.topicState.totalLIByTopicIds;
+          final topics = _store.state.topicState.topics.values.toList();
+          final totalLIByTopicIds = _store.state.topicState.totalLIByTopicIds;
 
           return ListView.builder(
             itemCount: topics.length,
@@ -125,7 +125,7 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: _screenSize.width,
               height: _screenSize.width / 2,
               child: buildTopicContent(
@@ -153,7 +153,7 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
           children: [
             Text(
               topicName,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -162,7 +162,7 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
             const SizedBox(height: 8),
             Text(
               "$totalLI words",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.white,
               ),
