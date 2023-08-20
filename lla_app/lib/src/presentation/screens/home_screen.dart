@@ -12,6 +12,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   final _iconSize = 32.0;
+  final List<String> _titles = const [
+    'Learning items',
+    'Flashcards',
+    'Profile',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildHome() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Learning items'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              _titles[_currentIndex],
+              style: const TextStyle(
+                color: Colors.purple,
+                fontSize: 24,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: false,
         shadowColor: Colors.transparent,
       ),
       backgroundColor: Colors.white,
@@ -29,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _currentIndex,
         children: const [
           LearningItemsScreen(),
-          Text('Likes'),
+          TopicsScreen(),
           Text('Profile'),
         ],
       ),
