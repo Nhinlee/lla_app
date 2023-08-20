@@ -19,12 +19,17 @@ abstract class AbstractTopicFeatureBuilder implements StatusStateBuilder {
 class _$TopicState extends TopicState {
   @override
   final BuiltMap<String, TopicEntity> topics;
+  @override
+  final BuiltMap<String, int> totalLIByTopicIds;
 
   factory _$TopicState([void Function(TopicStateBuilder)? updates]) =>
       (new TopicStateBuilder()..update(updates))._build();
 
-  _$TopicState._({required this.topics}) : super._() {
+  _$TopicState._({required this.topics, required this.totalLIByTopicIds})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(topics, r'TopicState', 'topics');
+    BuiltValueNullFieldError.checkNotNull(
+        totalLIByTopicIds, r'TopicState', 'totalLIByTopicIds');
   }
 
   @override
@@ -37,20 +42,25 @@ class _$TopicState extends TopicState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is TopicState && topics == other.topics;
+    return other is TopicState &&
+        topics == other.topics &&
+        totalLIByTopicIds == other.totalLIByTopicIds;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, topics.hashCode);
+    _$hash = $jc(_$hash, totalLIByTopicIds.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'TopicState')..add('topics', topics))
+    return (newBuiltValueToStringHelper(r'TopicState')
+          ..add('topics', topics)
+          ..add('totalLIByTopicIds', totalLIByTopicIds))
         .toString();
   }
 }
@@ -64,12 +74,19 @@ class TopicStateBuilder implements Builder<TopicState, TopicStateBuilder> {
   set topics(MapBuilder<String, TopicEntity>? topics) =>
       _$this._topics = topics;
 
+  MapBuilder<String, int>? _totalLIByTopicIds;
+  MapBuilder<String, int> get totalLIByTopicIds =>
+      _$this._totalLIByTopicIds ??= new MapBuilder<String, int>();
+  set totalLIByTopicIds(MapBuilder<String, int>? totalLIByTopicIds) =>
+      _$this._totalLIByTopicIds = totalLIByTopicIds;
+
   TopicStateBuilder();
 
   TopicStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _topics = $v.topics.toBuilder();
+      _totalLIByTopicIds = $v.totalLIByTopicIds.toBuilder();
       _$v = null;
     }
     return this;
@@ -92,12 +109,17 @@ class TopicStateBuilder implements Builder<TopicState, TopicStateBuilder> {
   _$TopicState _build() {
     _$TopicState _$result;
     try {
-      _$result = _$v ?? new _$TopicState._(topics: topics.build());
+      _$result = _$v ??
+          new _$TopicState._(
+              topics: topics.build(),
+              totalLIByTopicIds: totalLIByTopicIds.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'topics';
         topics.build();
+        _$failedField = 'totalLIByTopicIds';
+        totalLIByTopicIds.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'TopicState', _$failedField, e.toString());

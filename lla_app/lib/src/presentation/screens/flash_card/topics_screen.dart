@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:lla_app/business.dart';
+import 'package:lla_app/entity.dart';
+import 'package:lla_app/presentation.dart';
+import 'package:lla_app/src/presentation/container/app_status_container.dart';
+import 'package:redux/redux.dart';
 
-class TopicsScreen extends StatefulWidget {
+class TopicsScreen<T extends AppState> extends StatefulWidget {
   const TopicsScreen({super.key});
 
   @override
-  State<TopicsScreen> createState() => _TopicsScreenState();
+  State<TopicsScreen> createState() => _TopicsScreenState<T>();
 }
 
-class _TopicsScreenState extends State<TopicsScreen> {
-  final topcisList = [
-    "Home",
-    "Food",
-    "Transportation",
-    "Shopping",
-  ];
-
+class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
   final bgColorList = [
     Colors.purple,
     Color(0xFFDB6D6D),
@@ -28,30 +27,57 @@ class _TopicsScreenState extends State<TopicsScreen> {
   ];
 
   late Size _screenSize;
+  late Store<T> store;
+  String _statusId = "";
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     _screenSize = MediaQuery.of(context).size;
+    store = StoreProvider.of<T>(context);
+
+    onRefreshData();
+  }
+
+  Future<void> onRefreshData() async {
+    final action = CountTotalLIByTopicIdsAction();
+    setState(() {
+      _statusId = action.statusId;
+    });
+    store.dispatch(action);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: topcisList.length,
-      itemBuilder: (context, index) {
-        return buildTopicItemContainer(
-          index,
-          bgColorList[index % 3],
-          overlayColorList[index % 3],
-        );
-      },
+    return RefreshIndicator(
+      onRefresh: () => onRefreshData(),
+      child: AppStatusListener(
+        statusId: _statusId,
+        loadingPlaceHolder: AppCircleLoading(),
+        builder: (status) {
+          final topics = store.state.topicState.topics.values.toList();
+          final totalLIByTopicIds = store.state.topicState.totalLIByTopicIds;
+
+          return ListView.builder(
+            itemCount: topics.length,
+            itemBuilder: (context, index) {
+              return buildTopicItemContainer(
+                topics[index],
+                totalLIByTopicIds[topics[index].id] ?? 0,
+                bgColorList[index % 3],
+                overlayColorList[index % 3],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
   Padding buildTopicItemContainer(
-    int index,
+    TopicEntity topicEntity,
+    int totalLI,
     Color bgColor,
     Color overlayColor,
   ) {
@@ -102,7 +128,10 @@ class _TopicsScreenState extends State<TopicsScreen> {
             Container(
               width: _screenSize.width,
               height: _screenSize.width / 2,
-              child: buildTopicContent(index),
+              child: buildTopicContent(
+                topicEntity.name,
+                totalLI,
+              ),
             ),
           ],
         ),
@@ -110,7 +139,10 @@ class _TopicsScreenState extends State<TopicsScreen> {
     );
   }
 
-  Row buildTopicContent(int index) {
+  Row buildTopicContent(
+    String topicName,
+    int totalLI,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -120,7 +152,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              topcisList[index],
+              topicName,
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.white,
@@ -129,7 +161,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              "100 words",
+              "$totalLI words",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white,

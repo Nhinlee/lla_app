@@ -106,8 +106,8 @@ class _LearningItemsScreenState<T extends AppState>
             Hero(
               tag: "learning_item_${learningItem.id}",
               child: Container(
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),

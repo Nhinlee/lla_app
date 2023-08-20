@@ -48,14 +48,6 @@ class _LearningItemDetailScreenState<T extends AppState>
       appBar: AppBar(
         automaticallyImplyLeading: true,
         shadowColor: Colors.transparent,
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       GoRouter.of(context).go("/");
-        //     },
-        //     icon: const Icon(Icons.delete),
-        //   ),
-        // ],
       ),
       body: StoreConnector<T, LearningItemEntity>(
         converter: (store) =>
@@ -66,10 +58,7 @@ class _LearningItemDetailScreenState<T extends AppState>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Hero(
-                  tag: "learning_item_$_learningItemId",
-                  child: buildLIImageContainer(learningItem),
-                ),
+                buildLIImageContainer(learningItem),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -112,16 +101,23 @@ class _LearningItemDetailScreenState<T extends AppState>
   }
 
   Widget buildLIImageContainer(LearningItemEntity learningItem) {
-    return Container(
-      width: _screenWidth,
-      height: _screenWidth,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Image.network(
-        learningItem.imageLink,
-        fit: BoxFit.cover,
-      ),
+    return Stack(
+      children: [
+        Hero(
+          tag: "learning_item_$_learningItemId",
+          child: Container(
+            width: _screenWidth,
+            height: _screenWidth,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Image.network(
+              learningItem.imageLink,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

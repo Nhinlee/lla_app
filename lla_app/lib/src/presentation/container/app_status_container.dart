@@ -10,18 +10,23 @@ class AppStatusListener<T extends AppState> extends StatelessWidget {
     this.builder,
     this.onSuccess,
     this.onError,
+    this.loadingPlaceHolder,
   }) : super(key: key);
 
   final String statusId;
   final Function(Status)? builder;
   final Function(Status)? onSuccess;
   final Function(String message)? onError;
+  final Widget? loadingPlaceHolder;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<T, Status>(
       distinct: true,
       builder: (context, vm) {
+        if (vm.loading == LoadingStatus.loading && loadingPlaceHolder != null) {
+          return loadingPlaceHolder ?? const SizedBox();
+        }
         return builder?.call(vm) ?? const SizedBox();
       },
       onWillChange: (preVM, newVM) {

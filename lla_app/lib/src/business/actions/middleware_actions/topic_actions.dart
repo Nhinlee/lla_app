@@ -33,3 +33,30 @@ abstract class GetAllTopicsAction extends Object
           [void Function(GetAllTopicsActionBuilder) updates]) =
       _$GetAllTopicsAction;
 }
+
+abstract class CountTotalLIByTopicIdsAction extends Object
+    with
+        GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<CountTotalLIByTopicIdsAction,
+            CountTotalLIByTopicIdsActionBuilder> {
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    final totalLIByTopicIds = await AppRepo.repo.getTotalLIByTopicIds();
+
+    yield store.state.rebuild(
+      (updates) => updates.topicState
+        ..totalLIByTopicIds = MapBuilder(
+          totalLIByTopicIds,
+        ),
+    );
+  }
+
+  CountTotalLIByTopicIdsAction._();
+  factory CountTotalLIByTopicIdsAction(
+          [void Function(CountTotalLIByTopicIdsActionBuilder) updates]) =
+      _$CountTotalLIByTopicIdsAction;
+}

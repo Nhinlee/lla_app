@@ -23,6 +23,8 @@ abstract class AbstractRepository {
   );
 
   Future<List<TopicEntity>> getTopics();
+
+  Future<Map<String, int>> getTotalLIByTopicIds();
 }
 
 class LLARepository extends AbstractRepository {
@@ -69,5 +71,10 @@ class LLARepository extends AbstractRepository {
   @override
   Future<List<TopicEntity>> getTopics() {
     return restRepo.getTopics();
+  }
+
+  @override
+  Future<Map<String, int>> getTotalLIByTopicIds() {
+    return restRepo.getTotalLIByTopicIds();
   }
 }

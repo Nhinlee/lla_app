@@ -13,6 +13,8 @@ abstract class AbstractTopicFeature implements StatusState {
 abstract class TopicState implements Built<TopicState, TopicStateBuilder> {
   BuiltMap<String, TopicEntity> get topics;
 
+  BuiltMap<String, int> get totalLIByTopicIds;
+
   TopicState._();
 
   factory TopicState([void Function(TopicStateBuilder) updates]) = _$TopicState;

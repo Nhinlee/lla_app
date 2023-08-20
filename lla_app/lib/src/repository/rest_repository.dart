@@ -98,4 +98,22 @@ class RestLLARepository implements AbstractRepository {
 
     return topics;
   }
+
+  @override
+  Future<Map<String, int>> getTotalLIByTopicIds() async {
+    final resp = await dio.get(
+      RestApis.topicsWithTotalLI,
+    );
+
+    final totalLIByTopicIds = <String, int>{};
+    final listData = resp.data as List<dynamic>;
+
+    for (final item in listData) {
+      final topicId = item['id'] as String;
+      final totalLI = item['total_learning_items'] as int;
+      totalLIByTopicIds[topicId] = totalLI;
+    }
+
+    return totalLIByTopicIds;
+  }
 }
