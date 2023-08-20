@@ -8,6 +8,7 @@ abstract class AppState
     implements
         Built<AppState, AppStateBuilder>,
         AbstractLIFeature,
+        AbstractTopicFeature,
         StatusState {
   AppState._();
 

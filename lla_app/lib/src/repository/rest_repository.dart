@@ -80,4 +80,22 @@ class RestLLARepository implements AbstractRepository {
       ),
     );
   }
+
+  @override
+  Future<List<TopicEntity>> getTopics() async {
+    final resp = await dio.get(
+      RestApis.topics,
+    );
+
+    final topics = <TopicEntity>[];
+    final listData = resp.data as List<dynamic>;
+    for (final item in listData) {
+      final topic = TopicEntity.fromJson(item);
+      if (topic != null) {
+        topics.add(topic);
+      }
+    }
+
+    return topics;
+  }
 }

@@ -5,6 +5,9 @@ class RestApis {
   // static const String login = '/api/login';
   static const String resumableUpload = '/generate_resumable_upload_url';
   static const String learningItems = '/learning_items';
+
+  // Topic
+  static const String topics = '/topics';
 }
 
 class ParamKeys {

@@ -21,6 +21,8 @@ abstract class AbstractRepository {
   Future<String> uploadLearningItem(
     LearningItemEntity learningItem,
   );
+
+  Future<List<TopicEntity>> getTopics();
 }
 
 class LLARepository extends AbstractRepository {
@@ -62,5 +64,10 @@ class LLARepository extends AbstractRepository {
       file,
       resumableUploadUrl,
     );
+  }
+
+  @override
+  Future<List<TopicEntity>> getTopics() {
+    return restRepo.getTopics();
   }
 }

@@ -6,8 +6,9 @@ import 'package:lla_app/entity.dart';
 part 'serializes.g.dart';
 
 @SerializersFor([
-  LearningItemEntity,
   FileStoreURL,
+  LearningItemEntity,
+  TopicEntity,
 ])
 final Serializers appSerializers =
     (_$appSerializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
