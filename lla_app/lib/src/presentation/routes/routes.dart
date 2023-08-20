@@ -5,6 +5,7 @@ class AppRoutes {
   static const homeScreen = '/';
   static const learningItemDetailScreen = '/learning_item_detail_screen';
   static const uploadLIScreen = '/upload_li_screen';
+  static const startLearningScreen = '/start_learning_screen';
 // static const login = '/login';
 // static const editProfile = '/edit_profile';
 // static const splashScreen = '/splash_screen';
@@ -12,6 +13,8 @@ class AppRoutes {
 
 class ParamKeys {
   static const learningItemId = 'learningItemId';
+  static const topicId = 'topicId';
+  static const index = 'index';
 }
 
 final appRouter = GoRouter(
@@ -25,6 +28,11 @@ final appRouter = GoRouter(
       path: '${AppRoutes.learningItemDetailScreen}/${ParamKeys.learningItemId}',
       name: AppRoutes.learningItemDetailScreen,
       builder: (context, state) => const LearningItemDetailScreen(),
+    ),
+    GoRoute(
+      path: '${AppRoutes.startLearningScreen}/${ParamKeys.topicId}',
+      name: AppRoutes.startLearningScreen,
+      builder: (context, state) => const StartLearningScreen(),
     ),
     // GoRoute(
     //   path: AppRoutes.login,
