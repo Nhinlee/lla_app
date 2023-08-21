@@ -71,7 +71,9 @@ class _StartLearningScreenState<T extends AppState>
         width: _screenSize.width,
         height: 60,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            context.pushNamed(AppRoutes.flashcardScreen);
+          },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
