@@ -1,3 +1,4 @@
+export 'src/business/actions/middleware_actions/flashcard_actions.dart';
 export 'src/business/actions/middleware_actions/li_actions.dart';
 export 'src/business/actions/middleware_actions/topic_actions.dart';
 export 'src/business/lla_repository.dart';

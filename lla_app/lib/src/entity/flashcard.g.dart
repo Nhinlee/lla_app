@@ -188,7 +188,9 @@ class FlashcardEntityBuilder
   DateTime? get completedAt => _$this._completedAt;
   set completedAt(DateTime? completedAt) => _$this._completedAt = completedAt;
 
-  FlashcardEntityBuilder();
+  FlashcardEntityBuilder() {
+    FlashcardEntity._initializeBuilder(this);
+  }
 
   FlashcardEntityBuilder get _$this {
     final $v = _$v;

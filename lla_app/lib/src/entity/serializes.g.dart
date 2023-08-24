@@ -8,8 +8,12 @@ part of 'serializes.dart';
 
 Serializers _$appSerializers = (new Serializers().toBuilder()
       ..add(FileStoreURL.serializer)
+      ..add(FlashcardEntity.serializer)
       ..add(LearningItemEntity.serializer)
       ..add(TopicEntity.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>()))

@@ -9,6 +9,7 @@ part 'serializes.g.dart';
   FileStoreURL,
   LearningItemEntity,
   TopicEntity,
+  FlashcardEntity,
 ])
 final Serializers appSerializers =
     (_$appSerializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

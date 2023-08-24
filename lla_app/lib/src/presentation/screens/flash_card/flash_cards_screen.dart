@@ -1,21 +1,33 @@
 import 'dart:math' as math;
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:lla_app/business.dart';
+import 'package:lla_app/entity.dart';
+import 'package:lla_app/presentation.dart';
+import 'package:lla_app/src/presentation/container/app_status_container.dart';
+import 'package:redux/redux.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-class FlashcardsScreen extends StatefulWidget {
+class FlashcardsScreen<T extends AppState> extends StatefulWidget {
   const FlashcardsScreen({super.key});
 
   @override
-  State<FlashcardsScreen> createState() => _FlashcardsScreenState();
+  State<FlashcardsScreen> createState() => _FlashcardsScreenState<T>();
 }
 
-class _FlashcardsScreenState extends State<FlashcardsScreen> {
+class _FlashcardsScreenState<T extends AppState>
+    extends State<FlashcardsScreen> {
   late final SwipableStackController _controller;
 
   void _listenController() => setState(() {});
+
+  late Store<T> _store;
+  String _statusId = '';
+  String _topicId = "01H84JR4B55MRE6EXF7B8H1SP7";
 
   // TODO: just for testing
   final List<String> _flashcards = [
@@ -34,6 +46,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
   @override
   void initState() {
     super.initState();
+
     _controller = SwipableStackController()
       ..addListener(
         _listenController,
@@ -49,33 +62,62 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _store = StoreProvider.of<T>(context);
+
+    final action = GetFlashcardsAction.create(
+      topicId: _topicId,
+      limit: 10,
+    );
+    _statusId = action.statusId;
+    _store.dispatch(action);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              Padding(
+      body: AppStatusListener(
+        statusId: _statusId,
+        loadingPlaceHolder: const AppCircleLoading(),
+        builder: (status) {
+          return buildBody(context);
+        },
+      ),
+    );
+  }
+
+  SafeArea buildBody(BuildContext context) {
+    // get flashcard from state
+    final flashcards = _store.state.flashcardState.flashcards[_topicId]?.values
+            .toBuiltList() ??
+        BuiltList();
+
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: buildProgressContainer(context),
+            ),
+            const SizedBox(height: 24),
+            Expanded(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: buildProgressContainer(context),
+                child: buildFlashcardsContainer(flashcards),
               ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: buildFlashcardsContainer(),
-                ),
-              ),
-              const Text(
-                '''Swipe right if you are confident,
+            ),
+            const Text(
+              '''Swipe right if you are confident,
 and left if you need more practice''',
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
@@ -106,7 +148,10 @@ and left if you need more practice''',
     );
   }
 
-  SwipableStack buildFlashcardsContainer() {
+  SwipableStack buildFlashcardsContainer(
+    BuiltList<FlashcardEntity> flashcard,
+  ) {
+    print('flashcard: $flashcard');
     return SwipableStack(
       swipeAnchor: SwipeAnchor.bottom,
       detectableSwipeDirections: const {
@@ -129,11 +174,11 @@ and left if you need more practice''',
       horizontalSwipeThreshold: 0.8,
       verticalSwipeThreshold: 0.8,
       allowVerticalSwipe: false,
-      itemCount: _flashcards.length,
+      itemCount: flashcard.length,
       builder: (context, properties) {
         return Stack(
           children: [
-            buildFlipCard(context),
+            buildFlipCard(context, flashcard[properties.index]),
             // more custom overlay possible than with overlayBuilder
             if (properties.stackIndex == 0 && properties.direction != null)
               CardOverlay(
@@ -146,7 +191,10 @@ and left if you need more practice''',
     );
   }
 
-  FlipCard buildFlipCard(BuildContext context) {
+  FlipCard buildFlipCard(
+    BuildContext context,
+    FlashcardEntity flashcard,
+  ) {
     return FlipCard(
       fill: Fill.fillBack,
       // Fill the back side of the card to make in the same size as the front.
@@ -158,7 +206,15 @@ and left if you need more practice''',
         height: MediaQuery.of(context).size.height * 0.65,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.purple,
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.grey,
+            width: 1,
+          ),
+        ),
+        child: Image.network(
+          flashcard.imageLink,
+          fit: BoxFit.contain,
         ),
       ),
       back: Container(

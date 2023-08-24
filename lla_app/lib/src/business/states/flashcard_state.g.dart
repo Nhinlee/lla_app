@@ -18,7 +18,7 @@ abstract class AbstractFlashcardFeatureBuilder implements StatusStateBuilder {
 
 class _$FlashcardState extends FlashcardState {
   @override
-  final BuiltMap<String, FlashcardEntity> flashcards;
+  final BuiltMap<String, BuiltMap<String, FlashcardEntity>> flashcards;
 
   factory _$FlashcardState([void Function(FlashcardStateBuilder)? updates]) =>
       (new FlashcardStateBuilder()..update(updates))._build();
@@ -62,10 +62,12 @@ class FlashcardStateBuilder
     implements Builder<FlashcardState, FlashcardStateBuilder> {
   _$FlashcardState? _$v;
 
-  MapBuilder<String, FlashcardEntity>? _flashcards;
-  MapBuilder<String, FlashcardEntity> get flashcards =>
-      _$this._flashcards ??= new MapBuilder<String, FlashcardEntity>();
-  set flashcards(MapBuilder<String, FlashcardEntity>? flashcards) =>
+  MapBuilder<String, BuiltMap<String, FlashcardEntity>>? _flashcards;
+  MapBuilder<String, BuiltMap<String, FlashcardEntity>> get flashcards =>
+      _$this._flashcards ??=
+          new MapBuilder<String, BuiltMap<String, FlashcardEntity>>();
+  set flashcards(
+          MapBuilder<String, BuiltMap<String, FlashcardEntity>>? flashcards) =>
       _$this._flashcards = flashcards;
 
   FlashcardStateBuilder();

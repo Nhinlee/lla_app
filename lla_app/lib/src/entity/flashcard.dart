@@ -56,6 +56,16 @@ abstract class FlashcardEntity
     return builder.build();
   }
 
+  static void _initializeBuilder(FlashcardEntityBuilder builder) {
+    builder
+      ..id = ""
+      ..imageLink = ""
+      ..englishWord = ""
+      ..englishSentences = ListBuilder<String>()
+      ..createdAt = DateTime.now()
+      ..completedAt = DateTime.now();
+  }
+
   FlashcardEntity._();
 
   factory FlashcardEntity([void Function(FlashcardEntityBuilder) updates]) =

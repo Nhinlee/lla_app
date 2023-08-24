@@ -15,6 +15,17 @@ abstract class GetFlashcardsAction extends Object
 
   int get limit;
 
+  factory GetFlashcardsAction.create({
+    required String topicId,
+    required int limit,
+  }) {
+    return GetFlashcardsAction(
+      (updates) => updates
+        ..topicId = topicId
+        ..limit = limit,
+    );
+  }
+
   @override
   Stream<AppState> call(
     Store<AppState> store,
@@ -31,7 +42,7 @@ abstract class GetFlashcardsAction extends Object
 
     yield store.state.rebuild(
       (updates) =>
-          updates.flashcardState..flashcards = MapBuilder(flashcardsMap),
+          updates.flashcardState..flashcards[topicId] = BuiltMap(flashcardsMap),
     );
   }
 

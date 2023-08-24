@@ -1,6 +1,5 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:lla_app/entity.dart';
 import 'package:redux_simple/redux_simple.dart';
 
@@ -13,7 +12,8 @@ abstract class AbstractFlashcardFeature implements StatusState {
 
 abstract class FlashcardState
     implements Built<FlashcardState, FlashcardStateBuilder> {
-  BuiltMap<String, FlashcardEntity> get flashcards;
+  // Map<topicId, Map<flashcard_id, flashcard>>
+  BuiltMap<String, BuiltMap<String, FlashcardEntity>> get flashcards;
 
   FlashcardState._();
   factory FlashcardState([void Function(FlashcardStateBuilder) updates]) =
