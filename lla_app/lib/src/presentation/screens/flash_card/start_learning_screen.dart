@@ -71,9 +71,17 @@ class _StartLearningScreenState<T extends AppState>
         width: _screenSize.width,
         height: 60,
         child: ElevatedButton(
-          onPressed: () {
-            context.pushNamed(AppRoutes.flashcardScreen);
-          },
+          onPressed: _chooseLICount > 0
+              ? () {
+                  context.pushNamed(
+                    AppRoutes.flashcardScreen,
+                    queryParameters: {
+                      ParamKeys.topicId: _topicEntity.id,
+                      ParamKeys.limit: _chooseLICount.toString(),
+                    },
+                  );
+                }
+              : null,
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),

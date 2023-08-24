@@ -5,6 +5,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lla_app/business.dart';
 import 'package:lla_app/entity.dart';
 import 'package:lla_app/presentation.dart';
@@ -27,7 +28,8 @@ class _FlashcardsScreenState<T extends AppState>
 
   late Store<T> _store;
   String _statusId = '';
-  String _topicId = "01H84JR4B55MRE6EXF7B8H1SP7";
+  String _topicId = '';
+  int _limit = 0;
   int _currIndex = 0;
 
   @override
@@ -51,12 +53,15 @@ class _FlashcardsScreenState<T extends AppState>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     _store = StoreProvider.of<T>(context);
+
+    final queryParameters = GoRouterState.of(context).uri.queryParameters;
+    _topicId = queryParameters[ParamKeys.topicId] ?? "";
+    _limit = int.parse(queryParameters[ParamKeys.limit] ?? "0");
 
     final action = GetFlashcardsAction.create(
       topicId: _topicId,
-      limit: 10,
+      limit: _limit,
     );
     _statusId = action.statusId;
     _store.dispatch(action);
@@ -123,8 +128,8 @@ and left if you need more practice''',
           value: (_currIndex + 1) / length,
           minHeight: 8,
           backgroundColor: Colors.grey,
-          valueColor: const AlwaysStoppedAnimation<Color>(
-            Colors.purple,
+          valueColor: AlwaysStoppedAnimation<Color>(
+            AppColors.primary,
           ),
         ),
         const SizedBox(height: 8),
@@ -213,7 +218,7 @@ and left if you need more practice''',
         height: MediaQuery.of(context).size.height * 0.65,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.deepPurple,
+          color: AppColors.primary,
         ),
         padding: const EdgeInsets.fromLTRB(32, 64, 32, 32),
         child: Column(
@@ -223,7 +228,7 @@ and left if you need more practice''',
               flashcard.englishWord,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 32,
+                fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -232,7 +237,7 @@ and left if you need more practice''',
               "Examples",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
