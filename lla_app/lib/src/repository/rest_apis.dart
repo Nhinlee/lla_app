@@ -9,6 +9,9 @@ class RestApis {
   // Topic
   static const String topics = '/topics';
   static const String topicsWithTotalLI = '/topics/with_learning_items_count';
+
+  // Flashcard
+  static const String learningFlashcards = '/flashcards/learning';
 }
 
 class ParamKeys {

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'learning_item_entity.dart';
+part of 'learning_item.dart';
 
 // **************************************************************************
 // BuiltValueGenerator

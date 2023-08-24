@@ -116,4 +116,31 @@ class RestLLARepository implements AbstractRepository {
 
     return totalLIByTopicIds;
   }
+
+  @override
+  Future<List<FlashcardEntity>> getFlashcards({
+    required String topicId,
+    required int limit,
+  }) async {
+    final body = {
+      'topic_id': topicId,
+      'limit': limit,
+    };
+
+    final resp = await dio.post(
+      RestApis.learningFlashcards,
+      data: body,
+    );
+
+    final flashcards = <FlashcardEntity>[];
+    final listData = resp.data as List<dynamic>;
+    for (final item in listData) {
+      final flashcard = FlashcardEntity.fromJson(item);
+      if (flashcard != null) {
+        flashcards.add(flashcard);
+      }
+    }
+
+    return flashcards;
+  }
 }

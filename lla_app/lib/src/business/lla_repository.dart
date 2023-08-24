@@ -25,6 +25,11 @@ abstract class AbstractRepository {
   Future<List<TopicEntity>> getTopics();
 
   Future<Map<String, int>> getTotalLIByTopicIds();
+
+  Future<List<FlashcardEntity>> getFlashcards({
+    required String topicId,
+    required int limit,
+  });
 }
 
 class LLARepository extends AbstractRepository {
@@ -76,5 +81,16 @@ class LLARepository extends AbstractRepository {
   @override
   Future<Map<String, int>> getTotalLIByTopicIds() {
     return restRepo.getTotalLIByTopicIds();
+  }
+
+  @override
+  Future<List<FlashcardEntity>> getFlashcards({
+    required String topicId,
+    required int limit,
+  }) {
+    return restRepo.getFlashcards(
+      topicId: topicId,
+      limit: limit,
+    );
   }
 }

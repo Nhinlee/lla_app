@@ -3,7 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:lla_app/entity.dart';
 
-part 'learning_item_entity.g.dart';
+part 'learning_item.g.dart';
 
 abstract class LearningItemEntity
     implements Built<LearningItemEntity, LearningItemEntityBuilder> {

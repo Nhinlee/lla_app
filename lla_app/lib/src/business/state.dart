@@ -9,6 +9,7 @@ abstract class AppState
         Built<AppState, AppStateBuilder>,
         AbstractLIFeature,
         AbstractTopicFeature,
+        AbstractFlashcardFeature,
         StatusState {
   AppState._();
 
