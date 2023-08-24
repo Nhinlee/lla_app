@@ -32,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(
               _titles[_currentIndex],
-              style: const TextStyle(
-                color: Colors.purple,
+              style: TextStyle(
+                color: AppColors.primary,
                 fontSize: 24,
               ),
             ),
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         vertical: 16,
       ),
       unselectedItemColor: Colors.black.withOpacity(0.7),
-      selectedItemColor: Colors.purple,
+      selectedItemColor: AppColors.primary,
       items: [
         SalomonBottomBarItem(
           icon: Icon(Icons.widgets, size: _iconSize),

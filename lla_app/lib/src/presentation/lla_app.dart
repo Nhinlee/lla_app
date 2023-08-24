@@ -14,11 +14,11 @@ class _LLAAppState extends State<LLAApp> {
     return MaterialApp.router(
       title: 'LLA App',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        primaryColor: Colors.purple,
-        appBarTheme: const AppBarTheme(
+        primarySwatch: Colors.deepPurple,
+        primaryColor: AppColors.primary,
+        appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.purple,
+          foregroundColor: AppColors.primary,
           shadowColor: Colors.transparent,
         ),
       ),

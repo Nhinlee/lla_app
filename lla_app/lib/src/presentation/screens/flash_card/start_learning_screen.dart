@@ -132,10 +132,10 @@ class _StartLearningScreenState<T extends AppState>
           const SizedBox(height: 20),
           Text(
             "$_chooseLICount / $_totalLI words",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.purple,
+              color: AppColors.primary,
             ),
           ),
         ],

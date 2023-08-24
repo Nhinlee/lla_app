@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lla_app/entity.dart';
+import 'package:lla_app/presentation.dart';
 
 class TopicWithTotalLIWidget extends StatelessWidget {
   TopicWithTotalLIWidget({
@@ -20,7 +21,7 @@ class TopicWithTotalLIWidget extends StatelessWidget {
   final Function()? onTap;
 
   final bgColorList = [
-    Colors.purple,
+    AppColors.primary,
     const Color(0xFFDB6D6D),
     const Color(0xFFE7B768),
   ];

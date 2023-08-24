@@ -28,19 +28,6 @@ class _FlashcardsScreenState<T extends AppState>
   late Store<T> _store;
   String _statusId = '';
   String _topicId = "01H84JR4B55MRE6EXF7B8H1SP7";
-
-  // TODO: just for testing
-  final List<String> _flashcards = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-  ];
   int _currIndex = 0;
 
   @override
@@ -104,7 +91,10 @@ class _FlashcardsScreenState<T extends AppState>
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: buildProgressContainer(context),
+              child: buildProgressContainer(
+                context,
+                flashcards.length,
+              ),
             ),
             const SizedBox(height: 24),
             Expanded(
@@ -123,11 +113,14 @@ and left if you need more practice''',
     );
   }
 
-  Column buildProgressContainer(BuildContext context) {
+  Column buildProgressContainer(
+    BuildContext context,
+    int length,
+  ) {
     return Column(
       children: [
         LinearProgressIndicator(
-          value: (_currIndex + 1) / _flashcards.length,
+          value: (_currIndex + 1) / length,
           minHeight: 8,
           backgroundColor: Colors.grey,
           valueColor: const AlwaysStoppedAnimation<Color>(
@@ -139,7 +132,7 @@ and left if you need more practice''',
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${_currIndex + 1}/${_flashcards.length} words',
+              '${_currIndex + 1}/${length} words',
               style: Theme.of(context).textTheme.caption,
             ),
           ],
@@ -151,7 +144,6 @@ and left if you need more practice''',
   SwipableStack buildFlashcardsContainer(
     BuiltList<FlashcardEntity> flashcard,
   ) {
-    print('flashcard: $flashcard');
     return SwipableStack(
       swipeAnchor: SwipeAnchor.bottom,
       detectableSwipeDirections: const {
@@ -167,7 +159,7 @@ and left if you need more practice''',
         setState(() {
           _currIndex = math.min(
             index + 1,
-            _flashcards.length - 1,
+            flashcard.length - 1,
           );
         });
       },
@@ -221,7 +213,45 @@ and left if you need more practice''',
         height: MediaQuery.of(context).size.height * 0.65,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.amber,
+          color: Colors.deepPurple,
+        ),
+        padding: const EdgeInsets.fromLTRB(32, 64, 32, 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              flashcard.englishWord,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 32),
+            const Text(
+              "Examples",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: flashcard.englishSentences.length,
+                itemBuilder: (context, index) {
+                  return Text(
+                    flashcard.englishSentences[index],
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -136,7 +136,7 @@ class _LearningItemsScreenState<T extends AppState>
                   Text(
                     learningItem.englishWord,
                     style: Theme.of(context).textTheme.headline6?.copyWith(
-                          color: Colors.purple,
+                          color: AppColors.primary,
                         ),
                   ),
                   const SizedBox(height: 4),
