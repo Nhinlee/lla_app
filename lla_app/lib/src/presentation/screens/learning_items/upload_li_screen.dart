@@ -26,6 +26,7 @@ class UploadLIScreen<T extends AppState> extends StatefulWidget {
 class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
   final _englishTextController = TextEditingController();
   final _vietnameseTextController = TextEditingController();
+  final _enTextControllers = <TextEditingController>[];
 
   late Size _screenSize;
 
@@ -197,7 +198,13 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
             const SizedBox(width: 16),
             // Add icon button,
             InkWell(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  _enTextControllers.add(
+                    TextEditingController(),
+                  );
+                });
+              },
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -215,27 +222,42 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
           ],
         ),
         const SizedBox(height: 24),
-        buildSentenceItem(),
-        const SizedBox(height: 16),
-        buildSentenceItem(),
+        Column(
+          children: List.generate(_enTextControllers.length, (index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: buildSentenceItem(
+                _enTextControllers[index],
+                index,
+              ),
+            );
+          }),
+        ),
       ],
     );
   }
 
-  Widget buildSentenceItem() {
+  Widget buildSentenceItem(
+    TextEditingController controller,
+    int index,
+  ) {
     return Row(
       children: [
         Expanded(
           child: TextField(
+            controller: controller,
             decoration: buildInputDecoration(
               labelText: 'English',
             ),
           ),
         ),
         const SizedBox(width: 16),
-        // Delete icon button with red color
         InkWell(
-          onTap: () {},
+          onTap: () {
+            setState(() {
+              _enTextControllers.removeAt(index);
+            });
+          },
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -273,6 +295,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
       englishWord: englishText,
       vietnameseWord: vietnameseText,
       file: File(imageFile.path),
+      enTexts: _enTextControllers.map((e) => e.text).toList(),
     );
     setState(() {
       _uploadLIItemStatusId = action.statusId;

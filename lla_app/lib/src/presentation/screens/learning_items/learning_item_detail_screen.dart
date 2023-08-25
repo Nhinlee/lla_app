@@ -21,12 +21,6 @@ class _LearningItemDetailScreenState<T extends AppState>
 
   late Store<T> _store;
 
-  final _englishSentences = [
-    "The wind acted like a hairdryer, playing with her hair.",
-    "An old hairdryer roared, bringing back old memories.",
-    "The spaceship's panel lit up like a hairdryer's warm glow.",
-  ];
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -67,7 +61,6 @@ class _LearningItemDetailScreenState<T extends AppState>
                     learningItem,
                   ),
                 ),
-                // Build topic chip
                 const SizedBox(height: 24),
                 // list of english sentences widget
                 ...buildEnglishSentencesWidget(learningItem),
@@ -158,7 +151,7 @@ class _LearningItemDetailScreenState<T extends AppState>
   List<Widget> buildEnglishSentencesWidget(
     LearningItemEntity learningItem,
   ) {
-    return _englishSentences.map((sentence) {
+    return learningItem.englishSentences.map((sentence) {
       return Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,

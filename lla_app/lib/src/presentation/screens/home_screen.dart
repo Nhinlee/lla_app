@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       currentIndex: _currentIndex,
       onTap: (i) => setState(() => _currentIndex = i),
       margin: const EdgeInsets.symmetric(
-        horizontal: 32,
+        horizontal: 16,
         vertical: 16,
       ),
       unselectedItemColor: Colors.black.withOpacity(0.7),
