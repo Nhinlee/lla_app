@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
@@ -121,8 +122,9 @@ class _LearningItemsScreenState<T extends AppState>
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    learningItem.imageLink,
+                  child: CachedNetworkImage(
+                    imageUrl: learningItem.imageLink,
+                    fadeInDuration: const Duration(milliseconds: 300),
                     fit: BoxFit.cover,
                   ),
                 ),

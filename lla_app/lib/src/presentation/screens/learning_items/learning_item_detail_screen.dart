@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:go_router/go_router.dart';
@@ -104,8 +105,8 @@ class _LearningItemDetailScreenState<T extends AppState>
             decoration: const BoxDecoration(
               color: Colors.white,
             ),
-            child: Image.network(
-              learningItem.imageLink,
+            child: CachedNetworkImage(
+              imageUrl: learningItem.imageLink,
               fit: BoxFit.cover,
             ),
           ),
@@ -126,24 +127,25 @@ class _LearningItemDetailScreenState<T extends AppState>
           children: [
             Text(
               learningItem.englishWord,
-              style: Theme.of(context).textTheme.headline5?.copyWith(
-                    color: Colors.purple,
-                  ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.purple,
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          learningItem.vietnameseWord,
-          style: Theme.of(context).textTheme.bodyText2,
-        ),
+        const SizedBox(height: 8),
+        if (learningItem.vietnameseWord != "")
+          Padding(
+            padding: const EdgeInsets.only(left: 2),
+            child: Text(
+              learningItem.vietnameseWord,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
       ],
     );
   }
