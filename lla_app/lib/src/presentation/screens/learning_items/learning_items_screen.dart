@@ -222,7 +222,11 @@ class _LearningItemsScreenState<T extends AppState>
   }
 
   void onCaptureImage() async {
-    final imageFile = await _getImage();
+    final imageFile = await showModalBottomSheet<XFile?>(
+      context: context,
+      builder: (context) => const PickImageBottomSheet(),
+      backgroundColor: Colors.transparent,
+    );
     if (imageFile == null) {
       return;
     }

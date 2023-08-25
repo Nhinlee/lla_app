@@ -45,10 +45,17 @@ abstract class CountTotalLIByTopicIdsAction extends Object
   Stream<AppState> call(
     Store<AppState> store,
   ) async* {
+    final topics = await AppRepo.repo.getTopics();
     final totalLIByTopicIds = await AppRepo.repo.getTotalLIByTopicIds();
+
+    final topicsMap = <String, TopicEntity>{};
+    for (final topic in topics) {
+      topicsMap[topic.id] = topic;
+    }
 
     yield store.state.rebuild(
       (updates) => updates.topicState
+        ..topics.addAll(topicsMap)
         ..totalLIByTopicIds = MapBuilder(
           totalLIByTopicIds,
         ),
