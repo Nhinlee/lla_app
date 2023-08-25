@@ -54,6 +54,7 @@ abstract class UploadLIItemAction extends Object
     required String vietnameseWord,
     required File file,
     required List<String> enTexts,
+    String? topicId,
   }) {
     return UploadLIItemAction(
       (updates) => updates
@@ -61,7 +62,8 @@ abstract class UploadLIItemAction extends Object
           (b) => b
             ..englishWord = englishWord
             ..vietnameseWord = vietnameseWord
-            ..englishSentences = ListBuilder(enTexts),
+            ..englishSentences = ListBuilder(enTexts)
+            ..topicId = topicId,
         ).toBuilder()
         ..file = file,
     );

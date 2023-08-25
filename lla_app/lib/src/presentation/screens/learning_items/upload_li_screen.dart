@@ -27,6 +27,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
   final _englishTextController = TextEditingController();
   final _vietnameseTextController = TextEditingController();
   final _enTextControllers = <TextEditingController>[];
+  String _selectedTopicId = '';
 
   late Size _screenSize;
 
@@ -118,6 +119,8 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
             labelText: 'Vietnamese',
           ),
         ),
+        const SizedBox(height: 16),
+        buildTopicDropdown(),
         const SizedBox(height: 32),
         buildSentencesContainer(),
         const SizedBox(height: 32),
@@ -287,6 +290,38 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
     );
   }
 
+  Widget buildTopicDropdown() {
+    final topics = _store.state.topicState.topics;
+    return Row(
+      children: [
+        const Expanded(
+          child: Text(
+            'Topic',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Expanded(
+          child: DropdownButtonFormField<String>(
+            onChanged: (value) {
+              setState(() {
+                _selectedTopicId = value ?? '';
+              });
+            },
+            items: topics.keys.map((id) {
+              return DropdownMenuItem(
+                value: id,
+                child: Text(topics[id]?.name ?? ''),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
   void onUploadLIItem(XFile imageFile) {
     final englishText = _englishTextController.text;
     final vietnameseText = _vietnameseTextController.text;
@@ -296,6 +331,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
       vietnameseWord: vietnameseText,
       file: File(imageFile.path),
       enTexts: _enTextControllers.map((e) => e.text).toList(),
+      topicId: _selectedTopicId,
     );
     setState(() {
       _uploadLIItemStatusId = action.statusId;
@@ -304,5 +340,6 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
 
     _englishTextController.clear();
     _vietnameseTextController.clear();
+    _enTextControllers.clear();
   }
 }
