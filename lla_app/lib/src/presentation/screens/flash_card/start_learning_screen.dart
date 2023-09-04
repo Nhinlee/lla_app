@@ -65,34 +65,19 @@ class _StartLearningScreenState<T extends AppState>
   }
 
   Widget buildStartButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SizedBox(
-        width: _screenSize.width,
-        height: 60,
-        child: ElevatedButton(
-          onPressed: _chooseLICount > 0
-              ? () {
-                  context.pushNamed(
-                    AppRoutes.flashcardScreen,
-                    queryParameters: {
-                      ParamKeys.topicId: _topicEntity.id,
-                      ParamKeys.limit: _chooseLICount.toString(),
-                    },
-                  );
-                }
-              : null,
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
-            ),
-          ),
-          child: const Text(
-            "Start learning",
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-      ),
+    return AppRoundedButton(
+      text: "Start Learning",
+      onPressed: _chooseLICount > 0
+          ? () {
+              context.pushNamed(
+                AppRoutes.flashcardScreen,
+                queryParameters: {
+                  ParamKeys.topicId: _topicEntity.id,
+                  ParamKeys.limit: _chooseLICount.toString(),
+                },
+              );
+            }
+          : null,
     );
   }
 

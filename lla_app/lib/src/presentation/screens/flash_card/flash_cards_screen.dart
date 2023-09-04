@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lla_app/business.dart';
 import 'package:lla_app/entity.dart';
 import 'package:lla_app/presentation.dart';
+import 'package:lla_app/src/business/actions/reduce_actions/flashcard_actions.dart';
 import 'package:lla_app/src/presentation/container/app_status_container.dart';
 import 'package:redux/redux.dart';
 import 'package:swipable_stack/swipable_stack.dart';
@@ -31,6 +32,7 @@ class _FlashcardsScreenState<T extends AppState>
   String _topicId = '';
   int _limit = 0;
   int _currIndex = 0;
+  final _completedFlashcards = <String>[];
 
   @override
   void initState() {
@@ -147,7 +149,7 @@ and left if you need more practice''',
   }
 
   SwipableStack buildFlashcardsContainer(
-    BuiltList<FlashcardEntity> flashcard,
+    BuiltList<FlashcardEntity> flashcards,
   ) {
     return SwipableStack(
       swipeAnchor: SwipeAnchor.bottom,
@@ -158,24 +160,16 @@ and left if you need more practice''',
       controller: _controller,
       stackClipBehaviour: Clip.none,
       onSwipeCompleted: (index, direction) {
-        if (kDebugMode) {
-          print('$index, $direction');
-        }
-        setState(() {
-          _currIndex = math.min(
-            index + 1,
-            flashcard.length - 1,
-          );
-        });
+        onSwipeCompleted(flashcards, index, direction);
       },
       horizontalSwipeThreshold: 0.8,
       verticalSwipeThreshold: 0.8,
       allowVerticalSwipe: false,
-      itemCount: flashcard.length,
+      itemCount: flashcards.length,
       builder: (context, properties) {
         return Stack(
           children: [
-            buildFlipCard(context, flashcard[properties.index]),
+            buildFlipCard(context, flashcards[properties.index]),
             // more custom overlay possible than with overlayBuilder
             if (properties.stackIndex == 0 && properties.direction != null)
               CardOverlay(
@@ -186,6 +180,30 @@ and left if you need more practice''',
         );
       },
     );
+  }
+
+  void onSwipeCompleted(
+    BuiltList<FlashcardEntity> flashcard,
+    int index,
+    SwipeDirection direction,
+  ) {
+    if (kDebugMode) {
+      print('$index, $direction');
+    }
+    setState(() {
+      _currIndex = math.min(
+        index + 1,
+        flashcard.length - 1,
+      );
+    });
+
+    if (direction == SwipeDirection.right) {
+      _completedFlashcards.add(flashcard[index].id);
+    }
+
+    if (index == flashcard.length - 1) {
+      navigateToFinishLearningScreen(context);
+    }
   }
 
   FlipCard buildFlipCard(
@@ -260,6 +278,24 @@ and left if you need more practice''',
         ),
       ),
     );
+  }
+
+  void navigateToFinishLearningScreen(BuildContext context) {
+    _store.dispatch(
+      SaveCompletedFlashcardAction.create(
+        topicId: _topicId,
+        completedFlashcards: BuiltList(_completedFlashcards),
+      ),
+    );
+
+    Future.delayed(Duration(milliseconds: 300), () {
+      context.pushReplacementNamed(
+        AppRoutes.finishLearningFLScreen,
+        queryParameters: {
+          ParamKeys.topicId: _topicId,
+        },
+      );
+    });
   }
 }
 

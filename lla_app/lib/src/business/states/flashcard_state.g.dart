@@ -19,13 +19,19 @@ abstract class AbstractFlashcardFeatureBuilder implements StatusStateBuilder {
 class _$FlashcardState extends FlashcardState {
   @override
   final BuiltMap<String, BuiltMap<String, FlashcardEntity>> flashcards;
+  @override
+  final BuiltMap<String, BuiltList<String>> completedFlashcards;
 
   factory _$FlashcardState([void Function(FlashcardStateBuilder)? updates]) =>
       (new FlashcardStateBuilder()..update(updates))._build();
 
-  _$FlashcardState._({required this.flashcards}) : super._() {
+  _$FlashcardState._(
+      {required this.flashcards, required this.completedFlashcards})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         flashcards, r'FlashcardState', 'flashcards');
+    BuiltValueNullFieldError.checkNotNull(
+        completedFlashcards, r'FlashcardState', 'completedFlashcards');
   }
 
   @override
@@ -39,13 +45,16 @@ class _$FlashcardState extends FlashcardState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is FlashcardState && flashcards == other.flashcards;
+    return other is FlashcardState &&
+        flashcards == other.flashcards &&
+        completedFlashcards == other.completedFlashcards;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, flashcards.hashCode);
+    _$hash = $jc(_$hash, completedFlashcards.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -53,7 +62,8 @@ class _$FlashcardState extends FlashcardState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'FlashcardState')
-          ..add('flashcards', flashcards))
+          ..add('flashcards', flashcards)
+          ..add('completedFlashcards', completedFlashcards))
         .toString();
   }
 }
@@ -70,12 +80,21 @@ class FlashcardStateBuilder
           MapBuilder<String, BuiltMap<String, FlashcardEntity>>? flashcards) =>
       _$this._flashcards = flashcards;
 
+  MapBuilder<String, BuiltList<String>>? _completedFlashcards;
+  MapBuilder<String, BuiltList<String>> get completedFlashcards =>
+      _$this._completedFlashcards ??=
+          new MapBuilder<String, BuiltList<String>>();
+  set completedFlashcards(
+          MapBuilder<String, BuiltList<String>>? completedFlashcards) =>
+      _$this._completedFlashcards = completedFlashcards;
+
   FlashcardStateBuilder();
 
   FlashcardStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _flashcards = $v.flashcards.toBuilder();
+      _completedFlashcards = $v.completedFlashcards.toBuilder();
       _$v = null;
     }
     return this;
@@ -98,12 +117,17 @@ class FlashcardStateBuilder
   _$FlashcardState _build() {
     _$FlashcardState _$result;
     try {
-      _$result = _$v ?? new _$FlashcardState._(flashcards: flashcards.build());
+      _$result = _$v ??
+          new _$FlashcardState._(
+              flashcards: flashcards.build(),
+              completedFlashcards: completedFlashcards.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'flashcards';
         flashcards.build();
+        _$failedField = 'completedFlashcards';
+        completedFlashcards.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'FlashcardState', _$failedField, e.toString());

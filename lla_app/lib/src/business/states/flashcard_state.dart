@@ -14,6 +14,9 @@ abstract class FlashcardState
   // Map<topicId, Map<flashcard_id, flashcard>>
   BuiltMap<String, BuiltMap<String, FlashcardEntity>> get flashcards;
 
+  // Map<topicId, List<flashcard_id>>
+  BuiltMap<String, BuiltList<String>> get completedFlashcards;
+
   FlashcardState._();
   factory FlashcardState([void Function(FlashcardStateBuilder) updates]) =
       _$FlashcardState;

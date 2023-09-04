@@ -7,6 +7,7 @@ class AppRoutes {
   static const uploadLIScreen = '/upload_li_screen';
   static const startLearningScreen = '/start_learning_screen';
   static const flashcardScreen = '/flashcard_screen';
+  static const finishLearningFLScreen = '/finish_learning_fl_screen';
 // static const login = '/login';
 // static const editProfile = '/edit_profile';
 // static const splashScreen = '/splash_screen';
@@ -40,6 +41,11 @@ final appRouter = GoRouter(
       path: AppRoutes.flashcardScreen,
       name: AppRoutes.flashcardScreen,
       builder: (context, state) => const FlashcardsScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.finishLearningFLScreen,
+      name: AppRoutes.finishLearningFLScreen,
+      builder: (context, state) => const FinishLearningFLScreen(),
     ),
     // GoRoute(
     //   path: AppRoutes.login,
