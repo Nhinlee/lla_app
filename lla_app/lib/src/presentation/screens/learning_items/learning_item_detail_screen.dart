@@ -141,7 +141,7 @@ class _LearningItemDetailScreenState<T extends AppState>
             padding: const EdgeInsets.only(left: 2),
             child: Text(
               learningItem.vietnameseWord,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
               ),
             ),

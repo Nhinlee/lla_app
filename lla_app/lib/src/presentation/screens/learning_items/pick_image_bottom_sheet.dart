@@ -16,7 +16,7 @@ class _PickImageBottomSheetState extends State<PickImageBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),

@@ -137,7 +137,7 @@ and left if you need more practice''',
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${_currIndex + 1}/${length} words',
+              '${_currIndex + 1}/$length words',
               style: Theme.of(context).textTheme.caption,
             ),
           ],
@@ -226,7 +226,7 @@ and left if you need more practice''',
           children: [
             Text(
               flashcard.englishWord,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
@@ -248,7 +248,7 @@ and left if you need more practice''',
                 itemBuilder: (context, index) {
                   return Text(
                     flashcard.englishSentences[index],
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),

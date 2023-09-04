@@ -38,8 +38,8 @@ abstract class UploadLIItemAction extends Object
     );
 
     yield store.state.rebuild(
-      (b) => b.liState
-        ..learningItems.addAll({
+      (b) => b
+        ..liState.learningItems.addAll({
           newLearningItemId: learningItem.rebuild(
             (p0) => p0
               ..id = newLearningItemId
