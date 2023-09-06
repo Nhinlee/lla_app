@@ -30,6 +30,10 @@ abstract class AbstractRepository {
     required String topicId,
     required int limit,
   });
+
+  Future<void> completeFlashcards({
+    required List<String> flashcardIds,
+  });
 }
 
 class LLARepository extends AbstractRepository {
@@ -91,6 +95,15 @@ class LLARepository extends AbstractRepository {
     return restRepo.getFlashcards(
       topicId: topicId,
       limit: limit,
+    );
+  }
+
+  @override
+  Future<void> completeFlashcards({
+    required List<String> flashcardIds,
+  }) {
+    return restRepo.completeFlashcards(
+      flashcardIds: flashcardIds,
     );
   }
 }

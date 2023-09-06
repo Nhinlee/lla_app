@@ -143,4 +143,18 @@ class RestLLARepository implements AbstractRepository {
 
     return flashcards;
   }
+
+  @override
+  Future<void> completeFlashcards({
+    required List<String> flashcardIds,
+  }) {
+    final body = {
+      'ids': flashcardIds,
+    };
+
+    return dio.post(
+      RestApis.completeFlashcards,
+      data: body,
+    );
+  }
 }

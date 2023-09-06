@@ -52,3 +52,38 @@ abstract class GetFlashcardsAction extends Object
           [void Function(GetFlashcardsActionBuilder) updates]) =
       _$GetFlashcardsAction;
 }
+
+abstract class CompleteLearningFlashcardAction extends Object
+    with
+        GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<CompleteLearningFlashcardAction,
+            CompleteLearningFlashcardActionBuilder> {
+  BuiltList<String> get flashcardIds;
+
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    await AppRepo.repo.completeFlashcards(
+      flashcardIds: flashcardIds.toList(),
+    );
+
+    yield store.state;
+  }
+
+  CompleteLearningFlashcardAction._();
+
+  factory CompleteLearningFlashcardAction.create({
+    required BuiltList<String> flashcardIds,
+  }) {
+    return CompleteLearningFlashcardAction(
+      (updates) => updates..flashcardIds = flashcardIds.toBuilder(),
+    );
+  }
+
+  factory CompleteLearningFlashcardAction(
+          [void Function(CompleteLearningFlashcardActionBuilder) updates]) =
+      _$CompleteLearningFlashcardAction;
+}

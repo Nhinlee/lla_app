@@ -156,4 +156,144 @@ class GetFlashcardsActionBuilder
   }
 }
 
+class _$CompleteLearningFlashcardAction
+    extends CompleteLearningFlashcardAction {
+  @override
+  final BuiltList<String> flashcardIds;
+  @override
+  final Status? afterSuccessStatus;
+  @override
+  final Status? afterErrorStatus;
+
+  factory _$CompleteLearningFlashcardAction(
+          [void Function(CompleteLearningFlashcardActionBuilder)? updates]) =>
+      (new CompleteLearningFlashcardActionBuilder()..update(updates))._build();
+
+  _$CompleteLearningFlashcardAction._(
+      {required this.flashcardIds,
+      this.afterSuccessStatus,
+      this.afterErrorStatus})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        flashcardIds, r'CompleteLearningFlashcardAction', 'flashcardIds');
+  }
+
+  @override
+  CompleteLearningFlashcardAction rebuild(
+          void Function(CompleteLearningFlashcardActionBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CompleteLearningFlashcardActionBuilder toBuilder() =>
+      new CompleteLearningFlashcardActionBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CompleteLearningFlashcardAction &&
+        flashcardIds == other.flashcardIds &&
+        afterSuccessStatus == other.afterSuccessStatus &&
+        afterErrorStatus == other.afterErrorStatus;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, flashcardIds.hashCode);
+    _$hash = $jc(_$hash, afterSuccessStatus.hashCode);
+    _$hash = $jc(_$hash, afterErrorStatus.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'CompleteLearningFlashcardAction')
+          ..add('flashcardIds', flashcardIds)
+          ..add('afterSuccessStatus', afterSuccessStatus)
+          ..add('afterErrorStatus', afterErrorStatus))
+        .toString();
+  }
+}
+
+class CompleteLearningFlashcardActionBuilder
+    implements
+        Builder<CompleteLearningFlashcardAction,
+            CompleteLearningFlashcardActionBuilder>,
+        MiddlewareWithStatusActionBuilder<AppState> {
+  _$CompleteLearningFlashcardAction? _$v;
+
+  ListBuilder<String>? _flashcardIds;
+  ListBuilder<String> get flashcardIds =>
+      _$this._flashcardIds ??= new ListBuilder<String>();
+  set flashcardIds(covariant ListBuilder<String>? flashcardIds) =>
+      _$this._flashcardIds = flashcardIds;
+
+  StatusBuilder? _afterSuccessStatus;
+  StatusBuilder get afterSuccessStatus =>
+      _$this._afterSuccessStatus ??= new StatusBuilder();
+  set afterSuccessStatus(covariant StatusBuilder? afterSuccessStatus) =>
+      _$this._afterSuccessStatus = afterSuccessStatus;
+
+  StatusBuilder? _afterErrorStatus;
+  StatusBuilder get afterErrorStatus =>
+      _$this._afterErrorStatus ??= new StatusBuilder();
+  set afterErrorStatus(covariant StatusBuilder? afterErrorStatus) =>
+      _$this._afterErrorStatus = afterErrorStatus;
+
+  CompleteLearningFlashcardActionBuilder();
+
+  CompleteLearningFlashcardActionBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _flashcardIds = $v.flashcardIds.toBuilder();
+      _afterSuccessStatus = $v.afterSuccessStatus?.toBuilder();
+      _afterErrorStatus = $v.afterErrorStatus?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant CompleteLearningFlashcardAction other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$CompleteLearningFlashcardAction;
+  }
+
+  @override
+  void update(void Function(CompleteLearningFlashcardActionBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  CompleteLearningFlashcardAction build() => _build();
+
+  _$CompleteLearningFlashcardAction _build() {
+    _$CompleteLearningFlashcardAction _$result;
+    try {
+      _$result = _$v ??
+          new _$CompleteLearningFlashcardAction._(
+              flashcardIds: flashcardIds.build(),
+              afterSuccessStatus: _afterSuccessStatus?.build(),
+              afterErrorStatus: _afterErrorStatus?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'flashcardIds';
+        flashcardIds.build();
+        _$failedField = 'afterSuccessStatus';
+        _afterSuccessStatus?.build();
+        _$failedField = 'afterErrorStatus';
+        _afterErrorStatus?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'CompleteLearningFlashcardAction', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint
