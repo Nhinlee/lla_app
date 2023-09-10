@@ -7,6 +7,11 @@ class AppRepo {
 }
 
 abstract class AbstractRepository {
+  Future<String> login({
+    required String email,
+    required String password,
+  });
+
   Future<List<LearningItemEntity>> getLearningItems();
 
   Future<FileStoreURL> getResumableUploadUrl(
@@ -104,6 +109,17 @@ class LLARepository extends AbstractRepository {
   }) {
     return restRepo.completeFlashcards(
       flashcardIds: flashcardIds,
+    );
+  }
+
+  @override
+  Future<String> login({
+    required String email,
+    required String password,
+  }) {
+    return restRepo.login(
+      email: email,
+      password: password,
     );
   }
 }

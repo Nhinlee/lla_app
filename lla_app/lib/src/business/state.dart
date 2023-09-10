@@ -10,6 +10,7 @@ abstract class AppState
         AbstractLIFeature,
         AbstractTopicFeature,
         AbstractFlashcardFeature,
+        AbstractUserFeature,
         StatusState {
   AppState._();
 

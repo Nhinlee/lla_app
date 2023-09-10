@@ -11,4 +11,5 @@ class AppColors {
   static Color black = const Color(0xFF000000);
   static Color black10 = const Color(0xFF000000).withOpacity(0.1);
   static Color grey = const Color(0xFF9098A1);
+  static Color error = const Color(0xFFE02020);
 }

@@ -157,4 +157,22 @@ class RestLLARepository implements AbstractRepository {
       data: body,
     );
   }
+
+  @override
+  Future<String> login({
+    required String email,
+    required String password,
+  }) async {
+    final body = {
+      'email': email,
+      'password': password,
+    };
+
+    final resp = await  dio.post(
+      RestApis.login,
+      data: body,
+    );
+
+    return resp.data['token'];
+  }
 }

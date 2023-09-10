@@ -13,6 +13,10 @@ class RestApis {
   // Flashcard
   static const String learningFlashcards = '/flashcards/learning';
   static const String completeFlashcards = '/flashcards/complete';
+
+  // User
+  static const String login = '/login';
+  static const String signUp = '/signup';
 }
 
 class ParamKeys {

@@ -15,6 +15,8 @@ class _$AppState extends AppState {
   final TopicState topicState;
   @override
   final FlashcardState flashcardState;
+  @override
+  final UserState userState;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
@@ -23,7 +25,8 @@ class _$AppState extends AppState {
       {required this.liState,
       required this.statuses,
       required this.topicState,
-      required this.flashcardState})
+      required this.flashcardState,
+      required this.userState})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(liState, r'AppState', 'liState');
     BuiltValueNullFieldError.checkNotNull(statuses, r'AppState', 'statuses');
@@ -31,6 +34,7 @@ class _$AppState extends AppState {
         topicState, r'AppState', 'topicState');
     BuiltValueNullFieldError.checkNotNull(
         flashcardState, r'AppState', 'flashcardState');
+    BuiltValueNullFieldError.checkNotNull(userState, r'AppState', 'userState');
   }
 
   @override
@@ -47,7 +51,8 @@ class _$AppState extends AppState {
         liState == other.liState &&
         statuses == other.statuses &&
         topicState == other.topicState &&
-        flashcardState == other.flashcardState;
+        flashcardState == other.flashcardState &&
+        userState == other.userState;
   }
 
   @override
@@ -57,6 +62,7 @@ class _$AppState extends AppState {
     _$hash = $jc(_$hash, statuses.hashCode);
     _$hash = $jc(_$hash, topicState.hashCode);
     _$hash = $jc(_$hash, flashcardState.hashCode);
+    _$hash = $jc(_$hash, userState.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -67,7 +73,8 @@ class _$AppState extends AppState {
           ..add('liState', liState)
           ..add('statuses', statuses)
           ..add('topicState', topicState)
-          ..add('flashcardState', flashcardState))
+          ..add('flashcardState', flashcardState)
+          ..add('userState', userState))
         .toString();
   }
 }
@@ -78,6 +85,7 @@ class AppStateBuilder
         AbstractLIFeatureBuilder,
         AbstractTopicFeatureBuilder,
         AbstractFlashcardFeatureBuilder,
+        AbstractUserFeatureBuilder,
         StatusStateBuilder {
   _$AppState? _$v;
 
@@ -105,6 +113,12 @@ class AppStateBuilder
   set flashcardState(covariant FlashcardStateBuilder? flashcardState) =>
       _$this._flashcardState = flashcardState;
 
+  UserStateBuilder? _userState;
+  UserStateBuilder get userState =>
+      _$this._userState ??= new UserStateBuilder();
+  set userState(covariant UserStateBuilder? userState) =>
+      _$this._userState = userState;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -114,6 +128,7 @@ class AppStateBuilder
       _statuses = $v.statuses.toBuilder();
       _topicState = $v.topicState.toBuilder();
       _flashcardState = $v.flashcardState.toBuilder();
+      _userState = $v.userState.toBuilder();
       _$v = null;
     }
     return this;
@@ -142,7 +157,8 @@ class AppStateBuilder
               liState: liState.build(),
               statuses: statuses.build(),
               topicState: topicState.build(),
-              flashcardState: flashcardState.build());
+              flashcardState: flashcardState.build(),
+              userState: userState.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -154,6 +170,8 @@ class AppStateBuilder
         topicState.build();
         _$failedField = 'flashcardState';
         flashcardState.build();
+        _$failedField = 'userState';
+        userState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'AppState', _$failedField, e.toString());
