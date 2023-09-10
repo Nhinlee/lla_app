@@ -37,15 +37,17 @@ abstract class UploadLIItemAction extends Object
       ),
     );
 
+    final updatedLIs = {
+      newLearningItemId: learningItem.rebuild(
+        (p0) => p0
+          ..id = newLearningItemId
+          ..imageLink = fileStoreUrl.publicUrl,
+      ),
+      ...store.state.liState.learningItems.toMap(),
+    };
+
     yield store.state.rebuild(
-      (b) => b
-        ..liState.learningItems.addAll({
-          newLearningItemId: learningItem.rebuild(
-            (p0) => p0
-              ..id = newLearningItemId
-              ..imageLink = fileStoreUrl.publicUrl,
-          ),
-        }),
+      (b) => b..liState.learningItems = MapBuilder(updatedLIs),
     );
   }
 

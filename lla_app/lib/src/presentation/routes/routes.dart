@@ -8,6 +8,7 @@ class AppRoutes {
   static const startLearningScreen = '/start_learning_screen';
   static const flashcardScreen = '/flashcard_screen';
   static const finishLearningFLScreen = '/finish_learning_fl_screen';
+  static const loginScreen = '/login_screen';
 // static const login = '/login';
 // static const editProfile = '/edit_profile';
 // static const splashScreen = '/splash_screen';
@@ -21,7 +22,7 @@ class ParamKeys {
 }
 
 final appRouter = GoRouter(
-  initialLocation: AppRoutes.homeScreen,
+  initialLocation: AppRoutes.loginScreen,
   routes: [
     GoRoute(
       path: AppRoutes.homeScreen,
@@ -46,6 +47,11 @@ final appRouter = GoRouter(
       path: AppRoutes.finishLearningFLScreen,
       name: AppRoutes.finishLearningFLScreen,
       builder: (context, state) => const FinishLearningFLScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.loginScreen,
+      name: AppRoutes.loginScreen,
+      builder: (context, state) => const LoginScreen(),
     ),
     // GoRoute(
     //   path: AppRoutes.login,
