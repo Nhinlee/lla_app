@@ -25,6 +25,10 @@ class _LoginScreenState<T extends AppState> extends State<LoginScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    // Just for testing
+    _emailTextController.text = 'nhin@gmail.com';
+    _passwordTextController.text = '123456';
+
     _store = StoreProvider.of<T>(context);
   }
 

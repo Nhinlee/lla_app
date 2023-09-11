@@ -34,6 +34,8 @@ abstract class LoginAction extends Object
       password: password,
     );
 
+    await AppRepo.repo.setAccessToken(accessToken);
+
     yield store.state.rebuild((p0) {
       return p0.userState..accessToken = accessToken;
     });
@@ -57,11 +59,13 @@ abstract class VerifyAccessTokenAction extends Object
   ) async* {
     final accessToken = AppRepo.repo.getAccessToken();
 
+    yield store.state.rebuild(
+      (updates) => updates..userState.accessToken = accessToken,
+    );
+
     final isValid = await AppRepo.repo.verifyAccessToken(
       accessToken: accessToken,
     );
-
-    yield store.state;
   }
 
   factory VerifyAccessTokenAction(

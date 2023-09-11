@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:lla_app/presentation.dart';
+import 'package:lla_app/src/presentation/screens/splash_screen.dart';
 
 class AppRoutes {
   static const homeScreen = '/';
@@ -9,6 +10,7 @@ class AppRoutes {
   static const flashcardScreen = '/flashcard_screen';
   static const finishLearningFLScreen = '/finish_learning_fl_screen';
   static const loginScreen = '/login_screen';
+  static const splashScreen = '/splash_screen';
 // static const login = '/login';
 // static const editProfile = '/edit_profile';
 // static const splashScreen = '/splash_screen';
@@ -22,7 +24,7 @@ class ParamKeys {
 }
 
 final appRouter = GoRouter(
-  initialLocation: AppRoutes.loginScreen,
+  initialLocation: AppRoutes.splashScreen,
   routes: [
     GoRoute(
       path: AppRoutes.homeScreen,
@@ -53,6 +55,11 @@ final appRouter = GoRouter(
       path: AppRoutes.loginScreen,
       name: AppRoutes.loginScreen,
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.splashScreen,
+      name: AppRoutes.splashScreen,
+      builder: (context, state) => const SplashScreen(),
     ),
     // GoRoute(
     //   path: AppRoutes.login,

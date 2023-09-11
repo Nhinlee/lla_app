@@ -10,7 +10,7 @@ import 'package:redux_simple/redux_simple.dart';
 
 import 'business.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Init DI
@@ -18,7 +18,7 @@ void main() {
   final appInjector = getAppInjector();
 
   // Setup repository
-  AppRepo.repo = appInjector.appRepository;
+  AppRepo.repo = await appInjector.appRepository;
 
   // Init state
   final appState = AppState.initial();

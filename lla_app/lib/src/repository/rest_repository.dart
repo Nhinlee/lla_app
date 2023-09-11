@@ -194,13 +194,9 @@ class RestLLARepository implements AbstractRepository {
   Future<bool> verifyAccessToken({
     required String accessToken,
   }) async {
-    try {
-      await dio.get(
-        RestApis.verifyAccessToken,
-      );
-    } catch (e) {
-      return false;
-    }
+    await dio.get(
+      RestApis.verifyAccessToken,
+    );
 
     return true;
   }

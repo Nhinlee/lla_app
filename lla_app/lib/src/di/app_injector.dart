@@ -18,7 +18,8 @@ void configureDependencies() => i.init(getIt);
 class AppInjector {
   Dio get dio => getIt.get<Dio>();
 
-  AbstractRepository get appRepository => getIt.get<AbstractRepository>();
+  Future<AbstractRepository> get appRepository =>
+      getIt.getAsync<AbstractRepository>();
 }
 
 AppInjector getAppInjector() {
