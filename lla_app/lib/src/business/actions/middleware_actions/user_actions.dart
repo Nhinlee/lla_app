@@ -43,3 +43,28 @@ abstract class LoginAction extends Object
   factory LoginAction([void Function(LoginActionBuilder) updates]) =
       _$LoginAction;
 }
+
+abstract class VerifyAccessTokenAction extends Object
+    with GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<VerifyAccessTokenAction, VerifyAccessTokenActionBuilder> {
+  VerifyAccessTokenAction._();
+
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    final accessToken = AppRepo.repo.getAccessToken();
+
+    final isValid = await AppRepo.repo.verifyAccessToken(
+      accessToken: accessToken,
+    );
+
+    yield store.state;
+  }
+
+  factory VerifyAccessTokenAction(
+          [void Function(VerifyAccessTokenActionBuilder) updates]) =
+      _$VerifyAccessTokenAction;
+}

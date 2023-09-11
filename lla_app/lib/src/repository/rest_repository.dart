@@ -168,11 +168,40 @@ class RestLLARepository implements AbstractRepository {
       'password': password,
     };
 
-    final resp = await  dio.post(
+    final resp = await dio.post(
       RestApis.login,
       data: body,
     );
 
     return resp.data['token'];
+  }
+
+  @override
+  String getAccessToken() {
+    // TODO: implement getAccessToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> setAccessToken(
+    String accessToken,
+  ) {
+    // TODO: implement setAccessToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> verifyAccessToken({
+    required String accessToken,
+  }) async {
+    try {
+      await dio.get(
+        RestApis.verifyAccessToken,
+      );
+    } catch (e) {
+      return false;
+    }
+
+    return true;
   }
 }

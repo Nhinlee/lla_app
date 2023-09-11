@@ -9,6 +9,18 @@ class TokenInterceptors extends Interceptor {
 
   final Store<AppState> store;
 
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final accessToken = store.state.userState.accessToken;
+    options
+      ..headers.addAll(
+        {
+          "Authorization": accessToken,
+        },
+      );
+
+    super.onRequest(options, handler);
+  }
 
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) {

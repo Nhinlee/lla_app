@@ -7,11 +7,23 @@ class AppRepo {
 }
 
 abstract class AbstractRepository {
+  /// User
   Future<String> login({
     required String email,
     required String password,
   });
 
+  String getAccessToken();
+
+  Future<void> setAccessToken(
+    String accessToken,
+  );
+
+  Future<bool> verifyAccessToken({
+    required String accessToken,
+  });
+
+  /// Learning Item
   Future<List<LearningItemEntity>> getLearningItems();
 
   Future<FileStoreURL> getResumableUploadUrl(
@@ -27,10 +39,12 @@ abstract class AbstractRepository {
     LearningItemEntity learningItem,
   );
 
+  /// Topic
   Future<List<TopicEntity>> getTopics();
 
   Future<Map<String, int>> getTotalLIByTopicIds();
 
+  /// Flashcard
   Future<List<FlashcardEntity>> getFlashcards({
     required String topicId,
     required int limit,
@@ -43,9 +57,11 @@ abstract class AbstractRepository {
 
 class LLARepository extends AbstractRepository {
   final AbstractRepository restRepo;
+  final AbstractRepository localRepo;
 
   LLARepository({
     required this.restRepo,
+    required this.localRepo,
   });
 
   @override
@@ -120,6 +136,27 @@ class LLARepository extends AbstractRepository {
     return restRepo.login(
       email: email,
       password: password,
+    );
+  }
+
+  @override
+  String getAccessToken() {
+    return localRepo.getAccessToken();
+  }
+
+  @override
+  Future<void> setAccessToken(
+    String accessToken,
+  ) {
+    return localRepo.setAccessToken(
+      accessToken,
+    );
+  }
+
+  @override
+  Future<bool> verifyAccessToken({required String accessToken}) {
+    return restRepo.verifyAccessToken(
+      accessToken: accessToken,
     );
   }
 }

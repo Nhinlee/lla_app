@@ -15,6 +15,7 @@ class RestApis {
   static const String completeFlashcards = '/flashcards/complete';
 
   // User
+  static const String verifyAccessToken = '/lla';
   static const String login = '/login';
   static const String signUp = '/signup';
 }

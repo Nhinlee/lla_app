@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lla_app/repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class ServiceModule {
@@ -11,5 +12,10 @@ abstract class ServiceModule {
         baseUrl: RestApis.baseUrl,
       ),
     );
+  }
+
+  @singleton
+  Future<SharedPreferences> sharedPreferences() async {
+    return await SharedPreferences.getInstance();
   }
 }
