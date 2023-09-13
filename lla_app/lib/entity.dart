@@ -3,3 +3,4 @@ export 'src/entity/flashcard.dart';
 export 'src/entity/learning_item.dart';
 export 'src/entity/serializes.dart';
 export 'src/entity/topic.dart';
+export 'src/entity/user.dart';

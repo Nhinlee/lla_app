@@ -1,4 +1,5 @@
 import 'package:built_value/built_value.dart';
+import 'package:lla_app/entity.dart';
 import 'package:redux_simple/redux_simple.dart';
 
 part 'user_state.g.dart';
@@ -10,6 +11,8 @@ abstract class AbstractUserFeature implements StatusState {
 
 abstract class UserState implements Built<UserState, UserStateBuilder> {
   String? get accessToken;
+
+  UserEntity? get userInfo;
 
   UserState._();
   factory UserState([void Function(UserStateBuilder) updates]) = _$UserState;

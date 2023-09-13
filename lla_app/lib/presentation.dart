@@ -13,6 +13,7 @@ export 'src/presentation/screens/learning_items/pick_image_bottom_sheet.dart';
 export 'src/presentation/screens/learning_items/upload_li_screen.dart';
 export 'src/presentation/screens/splash_screen.dart';
 export 'src/presentation/screens/user/login_screen.dart';
+export 'src/presentation/screens/user/profile_screen.dart';
 export 'src/presentation/theme/app_colors.dart';
 export 'src/presentation/theme/app_text_styles.dart';
 export 'src/presentation/utils/app_toast.dart';

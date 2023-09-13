@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lla_app/presentation.dart';
+import 'package:lla_app/src/presentation/screens/user/profile_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: const [
           LearningItemsScreen(),
           TopicsScreen(),
-          Text('Profile'),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(),

@@ -19,11 +19,13 @@ abstract class AbstractUserFeatureBuilder implements StatusStateBuilder {
 class _$UserState extends UserState {
   @override
   final String? accessToken;
+  @override
+  final UserEntity? userInfo;
 
   factory _$UserState([void Function(UserStateBuilder)? updates]) =>
       (new UserStateBuilder()..update(updates))._build();
 
-  _$UserState._({this.accessToken}) : super._();
+  _$UserState._({this.accessToken, this.userInfo}) : super._();
 
   @override
   UserState rebuild(void Function(UserStateBuilder) updates) =>
@@ -35,13 +37,16 @@ class _$UserState extends UserState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is UserState && accessToken == other.accessToken;
+    return other is UserState &&
+        accessToken == other.accessToken &&
+        userInfo == other.userInfo;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, accessToken.hashCode);
+    _$hash = $jc(_$hash, userInfo.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -49,7 +54,8 @@ class _$UserState extends UserState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'UserState')
-          ..add('accessToken', accessToken))
+          ..add('accessToken', accessToken)
+          ..add('userInfo', userInfo))
         .toString();
   }
 }
@@ -61,12 +67,18 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
   String? get accessToken => _$this._accessToken;
   set accessToken(String? accessToken) => _$this._accessToken = accessToken;
 
+  UserEntityBuilder? _userInfo;
+  UserEntityBuilder get userInfo =>
+      _$this._userInfo ??= new UserEntityBuilder();
+  set userInfo(UserEntityBuilder? userInfo) => _$this._userInfo = userInfo;
+
   UserStateBuilder();
 
   UserStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _accessToken = $v.accessToken;
+      _userInfo = $v.userInfo?.toBuilder();
       _$v = null;
     }
     return this;
@@ -87,7 +99,22 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
   UserState build() => _build();
 
   _$UserState _build() {
-    final _$result = _$v ?? new _$UserState._(accessToken: accessToken);
+    _$UserState _$result;
+    try {
+      _$result = _$v ??
+          new _$UserState._(
+              accessToken: accessToken, userInfo: _userInfo?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'userInfo';
+        _userInfo?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'UserState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
