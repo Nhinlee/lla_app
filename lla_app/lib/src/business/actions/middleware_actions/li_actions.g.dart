@@ -275,4 +275,141 @@ class GetLIItemsActionBuilder
   }
 }
 
+class _$UploadImageAndGenerateTitleAction
+    extends UploadImageAndGenerateTitleAction {
+  @override
+  final File file;
+  @override
+  final Status? afterSuccessStatus;
+  @override
+  final Status? afterErrorStatus;
+
+  factory _$UploadImageAndGenerateTitleAction(
+          [void Function(UploadImageAndGenerateTitleActionBuilder)? updates]) =>
+      (new UploadImageAndGenerateTitleActionBuilder()..update(updates))
+          ._build();
+
+  _$UploadImageAndGenerateTitleAction._(
+      {required this.file, this.afterSuccessStatus, this.afterErrorStatus})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        file, r'UploadImageAndGenerateTitleAction', 'file');
+  }
+
+  @override
+  UploadImageAndGenerateTitleAction rebuild(
+          void Function(UploadImageAndGenerateTitleActionBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UploadImageAndGenerateTitleActionBuilder toBuilder() =>
+      new UploadImageAndGenerateTitleActionBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UploadImageAndGenerateTitleAction &&
+        file == other.file &&
+        afterSuccessStatus == other.afterSuccessStatus &&
+        afterErrorStatus == other.afterErrorStatus;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, file.hashCode);
+    _$hash = $jc(_$hash, afterSuccessStatus.hashCode);
+    _$hash = $jc(_$hash, afterErrorStatus.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'UploadImageAndGenerateTitleAction')
+          ..add('file', file)
+          ..add('afterSuccessStatus', afterSuccessStatus)
+          ..add('afterErrorStatus', afterErrorStatus))
+        .toString();
+  }
+}
+
+class UploadImageAndGenerateTitleActionBuilder
+    implements
+        Builder<UploadImageAndGenerateTitleAction,
+            UploadImageAndGenerateTitleActionBuilder>,
+        MiddlewareWithStatusActionBuilder<AppState> {
+  _$UploadImageAndGenerateTitleAction? _$v;
+
+  File? _file;
+  File? get file => _$this._file;
+  set file(covariant File? file) => _$this._file = file;
+
+  StatusBuilder? _afterSuccessStatus;
+  StatusBuilder get afterSuccessStatus =>
+      _$this._afterSuccessStatus ??= new StatusBuilder();
+  set afterSuccessStatus(covariant StatusBuilder? afterSuccessStatus) =>
+      _$this._afterSuccessStatus = afterSuccessStatus;
+
+  StatusBuilder? _afterErrorStatus;
+  StatusBuilder get afterErrorStatus =>
+      _$this._afterErrorStatus ??= new StatusBuilder();
+  set afterErrorStatus(covariant StatusBuilder? afterErrorStatus) =>
+      _$this._afterErrorStatus = afterErrorStatus;
+
+  UploadImageAndGenerateTitleActionBuilder();
+
+  UploadImageAndGenerateTitleActionBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _file = $v.file;
+      _afterSuccessStatus = $v.afterSuccessStatus?.toBuilder();
+      _afterErrorStatus = $v.afterErrorStatus?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(covariant UploadImageAndGenerateTitleAction other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$UploadImageAndGenerateTitleAction;
+  }
+
+  @override
+  void update(
+      void Function(UploadImageAndGenerateTitleActionBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  UploadImageAndGenerateTitleAction build() => _build();
+
+  _$UploadImageAndGenerateTitleAction _build() {
+    _$UploadImageAndGenerateTitleAction _$result;
+    try {
+      _$result = _$v ??
+          new _$UploadImageAndGenerateTitleAction._(
+              file: BuiltValueNullFieldError.checkNotNull(
+                  file, r'UploadImageAndGenerateTitleAction', 'file'),
+              afterSuccessStatus: _afterSuccessStatus?.build(),
+              afterErrorStatus: _afterErrorStatus?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'afterSuccessStatus';
+        _afterSuccessStatus?.build();
+        _$failedField = 'afterErrorStatus';
+        _afterErrorStatus?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'UploadImageAndGenerateTitleAction', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

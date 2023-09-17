@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:lla_app/entity.dart';
 
 class AppRepo {
@@ -52,6 +53,10 @@ abstract class AbstractRepository {
 
   Future<void> completeFlashcards({
     required List<String> flashcardIds,
+  });
+
+  Future<BuiltList<String>> generateImageTitles({
+    required String imageName,
   });
 }
 
@@ -157,6 +162,15 @@ class LLARepository extends AbstractRepository {
   Future<bool> verifyAccessToken({required String accessToken}) {
     return restRepo.verifyAccessToken(
       accessToken: accessToken,
+    );
+  }
+
+  @override
+  Future<BuiltList<String>> generateImageTitles({
+    required String imageName,
+  }) {
+    return restRepo.generateImageTitles(
+      imageName: imageName,
     );
   }
 }

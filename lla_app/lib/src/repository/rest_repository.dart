@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:built_collection/src/list.dart';
 import 'package:dio/dio.dart';
 import 'package:lla_app/business.dart';
 import 'package:lla_app/entity.dart';
@@ -199,5 +200,23 @@ class RestLLARepository implements AbstractRepository {
     );
 
     return true;
+  }
+
+  @override
+  Future<BuiltList<String>> generateImageTitles({
+    required String imageName,
+  }) async {
+    final body = {
+      'image_name': imageName,
+    };
+
+    final resp = await dio.post(
+      RestApis.generateLabel,
+      data: body,
+    );
+
+    final listData = resp.data as List<dynamic>;
+    final labels = listData.map((e) => e as String).toList();
+    return BuiltList<String>(labels);
   }
 }

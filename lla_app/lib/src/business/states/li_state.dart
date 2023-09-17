@@ -13,6 +13,10 @@ abstract class LearningItemState
     implements Built<LearningItemState, LearningItemStateBuilder> {
   BuiltMap<String, LearningItemEntity> get learningItems;
 
+  BuiltMap<String, String> get imageUrlByImageNames;
+
+  BuiltMap<String, BuiltList<String>> get imageTitlesByImageNames;
+
   @BuiltValueHook(initializeBuilder: true)
   static void _init(LearningItemStateBuilder builder) =>
       builder..learningItems = MapBuilder();

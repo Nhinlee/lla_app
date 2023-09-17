@@ -22,18 +22,25 @@ abstract class UploadLIItemAction extends Object
     Store<AppState> store,
   ) async* {
     final fileName = file.path.split('/').last;
-    final fileStoreUrl = await AppRepo.repo.getResumableUploadUrl(
-      fileName,
-    );
 
-    await AppRepo.repo.uploadFile(
-      file,
-      fileStoreUrl.resumableUploadUrl,
-    );
+    // check if image is have in state
+    String imageURL = store.state.liState.imageUrlByImageNames[fileName] ?? '';
+    if (imageURL.isEmpty) {
+      final fileStoreUrl = await AppRepo.repo.getResumableUploadUrl(
+        fileName,
+      );
+
+      await AppRepo.repo.uploadFile(
+        file,
+        fileStoreUrl.resumableUploadUrl,
+      );
+
+      imageURL = fileStoreUrl.publicUrl;
+    }
 
     final newLearningItemId = await AppRepo.repo.uploadLearningItem(
       learningItem.rebuild(
-        (p0) => p0..imageLink = fileStoreUrl.publicUrl,
+        (p0) => p0..imageLink = imageURL,
       ),
     );
 
@@ -41,7 +48,7 @@ abstract class UploadLIItemAction extends Object
       newLearningItemId: learningItem.rebuild(
         (p0) => p0
           ..id = newLearningItemId
-          ..imageLink = fileStoreUrl.publicUrl,
+          ..imageLink = imageURL,
       ),
       ...store.state.liState.learningItems.toMap(),
     };
@@ -103,4 +110,60 @@ abstract class GetLIItemsAction extends Object
 
   factory GetLIItemsAction([void Function(GetLIItemsActionBuilder) updates]) =
       _$GetLIItemsAction;
+}
+
+abstract class UploadImageAndGenerateTitleAction
+    with
+        GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<UploadImageAndGenerateTitleAction,
+            UploadImageAndGenerateTitleActionBuilder> {
+  File get file;
+
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    final fileName = file.path.split('/').last;
+    final fileStoreUrl = await AppRepo.repo.getResumableUploadUrl(
+      fileName,
+    );
+
+    await AppRepo.repo.uploadFile(
+      file,
+      fileStoreUrl.resumableUploadUrl,
+    );
+
+    yield store.state.rebuild(
+      (b) => b
+        ..liState.imageUrlByImageNames.addAll({
+          fileName: fileStoreUrl.publicUrl,
+        }),
+    );
+
+    final titles = await AppRepo.repo.generateImageTitles(
+      imageName: fileName,
+    );
+
+    yield store.state.rebuild(
+      (b) => b
+        ..liState.imageTitlesByImageNames.addAll({
+          fileName: titles,
+        }),
+    );
+  }
+
+  factory UploadImageAndGenerateTitleAction.create({
+    required File file,
+  }) {
+    return UploadImageAndGenerateTitleAction(
+      (updates) => updates..file = file,
+    );
+  }
+
+  UploadImageAndGenerateTitleAction._();
+  factory UploadImageAndGenerateTitleAction(
+          [void Function(UploadImageAndGenerateTitleActionBuilder) updates]) =
+      _$UploadImageAndGenerateTitleAction;
 }

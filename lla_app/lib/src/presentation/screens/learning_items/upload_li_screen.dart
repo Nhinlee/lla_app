@@ -33,6 +33,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
 
   late Store<T> _store;
   String _uploadLIItemStatusId = '';
+  bool _isGenerating = true;
 
   @override
   void didChangeDependencies() {
@@ -59,19 +60,17 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
       children: [
         SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.file(
                 File(imageFile.path),
                 width: _screenSize.width,
-                height: _screenSize.width,
+                height: _screenSize.width * 0.8,
                 fit: BoxFit.cover,
               ),
               const SizedBox(height: 32),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: buildTextFormContainer(),
-              ),
+              buildLIEditor(imageFile),
             ],
           ),
         ),
@@ -89,8 +88,25 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
 
             return const SizedBox.shrink();
           },
-        )
+        ),
       ],
+    );
+  }
+
+  Padding buildLIEditor(XFile imageFile) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: _isGenerating
+          ? AIGenerateContainer(
+              imageFile: File(imageFile.path),
+              onFinishGenerate: (englishTitle) {
+                _englishTextController.text = englishTitle;
+                setState(() {
+                  _isGenerating = false;
+                });
+              },
+            )
+          : buildTextFormContainer(),
     );
   }
 

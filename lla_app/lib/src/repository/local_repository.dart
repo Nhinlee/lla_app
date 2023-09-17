@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:built_collection/src/list.dart';
 import 'package:lla_app/business.dart';
 import 'package:lla_app/src/entity/common/filestore_url.dart';
 import 'package:lla_app/src/entity/flashcard.dart';
@@ -89,6 +90,12 @@ class LocalRepository extends AbstractRepository {
     required String accessToken,
   }) {
     // TODO: implement verifyAccessToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<BuiltList<String>> generateImageTitles({required String imageName}) {
+    // TODO: implement generateImageTitle
     throw UnimplementedError();
   }
 }
