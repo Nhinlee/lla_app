@@ -264,11 +264,14 @@ and left if you need more practice''',
               child: ListView.builder(
                 itemCount: flashcard.englishSentences.length,
                 itemBuilder: (context, index) {
-                  return Text(
-                    flashcard.englishSentences[index],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Text(
+                      flashcard.englishSentences[index],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
                   );
                 },

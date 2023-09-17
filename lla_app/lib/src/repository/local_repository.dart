@@ -98,4 +98,12 @@ class LocalRepository extends AbstractRepository {
     // TODO: implement generateImageTitle
     throw UnimplementedError();
   }
+
+  @override
+  Future<BuiltList<String>> generateEnglishSentences({
+    required String englishWord,
+  }) {
+    // TODO: implement generateEnglishSentences
+    throw UnimplementedError();
+  }
 }

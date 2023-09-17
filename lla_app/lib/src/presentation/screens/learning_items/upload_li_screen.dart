@@ -26,13 +26,14 @@ class UploadLIScreen<T extends AppState> extends StatefulWidget {
 class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
   final _englishTextController = TextEditingController();
   final _vietnameseTextController = TextEditingController();
-  final _enTextControllers = <TextEditingController>[];
+  final _enSentencesControllers = <TextEditingController>[];
   String _selectedTopicId = '';
 
   late Size _screenSize;
 
   late Store<T> _store;
   String _uploadLIItemStatusId = '';
+  String _aiGenerateSentencesStatusId = '';
   bool _isGenerating = true;
 
   @override
@@ -191,35 +192,13 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.purple,
-                  ),
-                ),
-                child: GradientText(
-                  'AI Generate',
-                  colors: [
-                    Colors.purple,
-                    Colors.purple.shade300,
-                  ],
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+            buildAIGenerateSentencesContainer(),
             const SizedBox(width: 16),
             // Add icon button,
             InkWell(
               onTap: () {
                 setState(() {
-                  _enTextControllers.add(
+                  _enSentencesControllers.add(
                     TextEditingController(),
                   );
                 });
@@ -242,17 +221,74 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
         ),
         const SizedBox(height: 24),
         Column(
-          children: List.generate(_enTextControllers.length, (index) {
+          children: List.generate(_enSentencesControllers.length, (index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: buildSentenceItem(
-                _enTextControllers[index],
+                _enSentencesControllers[index],
                 index,
               ),
             );
           }),
         ),
       ],
+    );
+  }
+
+  Widget buildAIGenerateSentencesContainer() {
+    return AppStatusListener(
+      statusId: _aiGenerateSentencesStatusId,
+      loadingPlaceHolder: const AppCircleLoading(),
+      onSuccess: (status) {
+        final enSentences = _store.state.liState
+                .englishSentencesByImageNames[widget.imageFile.name] ??
+            BuiltList<String>();
+
+        if (mounted) {
+          setState(() {
+            for (final enSentence in enSentences) {
+              _enSentencesControllers.add(
+                TextEditingController(text: enSentence),
+              );
+            }
+          });
+        }
+      },
+      builder: (p0) {
+        return InkWell(
+          onTap: () {
+            final action = GenerateEnglishSentencesAction.create(
+              englishWord: _englishTextController.text,
+              imageName: widget.imageFile.name,
+            );
+            setState(() {
+              _enSentencesControllers.clear();
+              _aiGenerateSentencesStatusId = action.statusId;
+            });
+            _store.dispatch(action);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Colors.purple,
+              ),
+            ),
+            child: GradientText(
+              'AI Generate',
+              colors: [
+                Colors.purple,
+                Colors.purple.shade300,
+              ],
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -265,6 +301,8 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
         Expanded(
           child: TextField(
             controller: controller,
+            minLines: 1,
+            maxLines: 3,
             decoration: buildInputDecoration(
               labelText: 'English',
             ),
@@ -274,7 +312,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
         InkWell(
           onTap: () {
             setState(() {
-              _enTextControllers.removeAt(index);
+              _enSentencesControllers.removeAt(index);
             });
           },
           child: Container(
@@ -346,7 +384,7 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
       englishWord: englishText,
       vietnameseWord: vietnameseText,
       file: File(imageFile.path),
-      enTexts: _enTextControllers.map((e) => e.text).toList(),
+      enTexts: _enSentencesControllers.map((e) => e.text).toList(),
       topicId: _selectedTopicId,
     );
     setState(() {
@@ -356,6 +394,6 @@ class _UploadLIScreenState<T extends AppState> extends State<UploadLIScreen> {
 
     _englishTextController.clear();
     _vietnameseTextController.clear();
-    _enTextControllers.clear();
+    _enSentencesControllers.clear();
   }
 }

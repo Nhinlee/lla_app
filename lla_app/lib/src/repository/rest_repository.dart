@@ -219,4 +219,23 @@ class RestLLARepository implements AbstractRepository {
     final labels = listData.map((e) => e as String).toList();
     return BuiltList<String>(labels);
   }
+
+  @override
+  Future<BuiltList<String>> generateEnglishSentences({
+    required String englishWord,
+  }) async {
+    final body = {
+      'english_word': englishWord,
+    };
+
+    final resp = await dio.post(
+      RestApis.generateSentences,
+      data: body,
+    );
+
+    final listData = resp.data as List<dynamic>;
+    final sentences = listData.map((e) => e as String).toList();
+
+    return BuiltList<String>(sentences);
+  }
 }

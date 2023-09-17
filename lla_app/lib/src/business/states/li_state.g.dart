@@ -23,6 +23,8 @@ class _$LearningItemState extends LearningItemState {
   final BuiltMap<String, String> imageUrlByImageNames;
   @override
   final BuiltMap<String, BuiltList<String>> imageTitlesByImageNames;
+  @override
+  final BuiltMap<String, BuiltList<String>> englishSentencesByImageNames;
 
   factory _$LearningItemState(
           [void Function(LearningItemStateBuilder)? updates]) =>
@@ -31,7 +33,8 @@ class _$LearningItemState extends LearningItemState {
   _$LearningItemState._(
       {required this.learningItems,
       required this.imageUrlByImageNames,
-      required this.imageTitlesByImageNames})
+      required this.imageTitlesByImageNames,
+      required this.englishSentencesByImageNames})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         learningItems, r'LearningItemState', 'learningItems');
@@ -39,6 +42,8 @@ class _$LearningItemState extends LearningItemState {
         imageUrlByImageNames, r'LearningItemState', 'imageUrlByImageNames');
     BuiltValueNullFieldError.checkNotNull(imageTitlesByImageNames,
         r'LearningItemState', 'imageTitlesByImageNames');
+    BuiltValueNullFieldError.checkNotNull(englishSentencesByImageNames,
+        r'LearningItemState', 'englishSentencesByImageNames');
   }
 
   @override
@@ -55,7 +60,8 @@ class _$LearningItemState extends LearningItemState {
     return other is LearningItemState &&
         learningItems == other.learningItems &&
         imageUrlByImageNames == other.imageUrlByImageNames &&
-        imageTitlesByImageNames == other.imageTitlesByImageNames;
+        imageTitlesByImageNames == other.imageTitlesByImageNames &&
+        englishSentencesByImageNames == other.englishSentencesByImageNames;
   }
 
   @override
@@ -64,6 +70,7 @@ class _$LearningItemState extends LearningItemState {
     _$hash = $jc(_$hash, learningItems.hashCode);
     _$hash = $jc(_$hash, imageUrlByImageNames.hashCode);
     _$hash = $jc(_$hash, imageTitlesByImageNames.hashCode);
+    _$hash = $jc(_$hash, englishSentencesByImageNames.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -73,7 +80,8 @@ class _$LearningItemState extends LearningItemState {
     return (newBuiltValueToStringHelper(r'LearningItemState')
           ..add('learningItems', learningItems)
           ..add('imageUrlByImageNames', imageUrlByImageNames)
-          ..add('imageTitlesByImageNames', imageTitlesByImageNames))
+          ..add('imageTitlesByImageNames', imageTitlesByImageNames)
+          ..add('englishSentencesByImageNames', englishSentencesByImageNames))
         .toString();
   }
 }
@@ -102,6 +110,15 @@ class LearningItemStateBuilder
           MapBuilder<String, BuiltList<String>>? imageTitlesByImageNames) =>
       _$this._imageTitlesByImageNames = imageTitlesByImageNames;
 
+  MapBuilder<String, BuiltList<String>>? _englishSentencesByImageNames;
+  MapBuilder<String, BuiltList<String>> get englishSentencesByImageNames =>
+      _$this._englishSentencesByImageNames ??=
+          new MapBuilder<String, BuiltList<String>>();
+  set englishSentencesByImageNames(
+          MapBuilder<String, BuiltList<String>>?
+              englishSentencesByImageNames) =>
+      _$this._englishSentencesByImageNames = englishSentencesByImageNames;
+
   LearningItemStateBuilder() {
     LearningItemState._init(this);
   }
@@ -112,6 +129,8 @@ class LearningItemStateBuilder
       _learningItems = $v.learningItems.toBuilder();
       _imageUrlByImageNames = $v.imageUrlByImageNames.toBuilder();
       _imageTitlesByImageNames = $v.imageTitlesByImageNames.toBuilder();
+      _englishSentencesByImageNames =
+          $v.englishSentencesByImageNames.toBuilder();
       _$v = null;
     }
     return this;
@@ -138,7 +157,9 @@ class LearningItemStateBuilder
           new _$LearningItemState._(
               learningItems: learningItems.build(),
               imageUrlByImageNames: imageUrlByImageNames.build(),
-              imageTitlesByImageNames: imageTitlesByImageNames.build());
+              imageTitlesByImageNames: imageTitlesByImageNames.build(),
+              englishSentencesByImageNames:
+                  englishSentencesByImageNames.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -148,6 +169,8 @@ class LearningItemStateBuilder
         imageUrlByImageNames.build();
         _$failedField = 'imageTitlesByImageNames';
         imageTitlesByImageNames.build();
+        _$failedField = 'englishSentencesByImageNames';
+        englishSentencesByImageNames.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'LearningItemState', _$failedField, e.toString());

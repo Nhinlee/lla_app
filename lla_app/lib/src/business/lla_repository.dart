@@ -58,6 +58,10 @@ abstract class AbstractRepository {
   Future<BuiltList<String>> generateImageTitles({
     required String imageName,
   });
+
+  Future<BuiltList<String>> generateEnglishSentences({
+    required String englishWord,
+  });
 }
 
 class LLARepository extends AbstractRepository {
@@ -171,6 +175,15 @@ class LLARepository extends AbstractRepository {
   }) {
     return restRepo.generateImageTitles(
       imageName: imageName,
+    );
+  }
+
+  @override
+  Future<BuiltList<String>> generateEnglishSentences({
+    required String englishWord,
+  }) {
+    return restRepo.generateEnglishSentences(
+      englishWord: englishWord,
     );
   }
 }

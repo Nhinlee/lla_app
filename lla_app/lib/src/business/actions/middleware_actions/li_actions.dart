@@ -163,7 +163,53 @@ abstract class UploadImageAndGenerateTitleAction
   }
 
   UploadImageAndGenerateTitleAction._();
+
   factory UploadImageAndGenerateTitleAction(
           [void Function(UploadImageAndGenerateTitleActionBuilder) updates]) =
       _$UploadImageAndGenerateTitleAction;
+}
+
+abstract class GenerateEnglishSentencesAction
+    with
+        GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<GenerateEnglishSentencesAction,
+            GenerateEnglishSentencesActionBuilder> {
+  String get englishWord;
+
+  String get imageName;
+
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    final englishSentences = await AppRepo.repo.generateEnglishSentences(
+      englishWord: englishWord,
+    );
+
+    yield store.state.rebuild(
+      (b) => b
+        ..liState.englishSentencesByImageNames.addAll({
+          imageName: englishSentences,
+        }),
+    );
+  }
+
+  factory GenerateEnglishSentencesAction.create({
+    required String englishWord,
+    required String imageName,
+  }) {
+    return GenerateEnglishSentencesAction(
+      (updates) => updates
+        ..englishWord = englishWord
+        ..imageName = imageName,
+    );
+  }
+
+  GenerateEnglishSentencesAction._();
+
+  factory GenerateEnglishSentencesAction(
+          [void Function(GenerateEnglishSentencesActionBuilder) updates]) =
+      _$GenerateEnglishSentencesAction;
 }

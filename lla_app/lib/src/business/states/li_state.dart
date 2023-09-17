@@ -17,6 +17,8 @@ abstract class LearningItemState
 
   BuiltMap<String, BuiltList<String>> get imageTitlesByImageNames;
 
+  BuiltMap<String, BuiltList<String>> get englishSentencesByImageNames;
+
   @BuiltValueHook(initializeBuilder: true)
   static void _init(LearningItemStateBuilder builder) =>
       builder..learningItems = MapBuilder();
