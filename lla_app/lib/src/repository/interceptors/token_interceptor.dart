@@ -5,9 +5,11 @@ import 'package:redux/redux.dart';
 class TokenInterceptors extends Interceptor {
   const TokenInterceptors({
     required this.store,
+    required this.onUnauthenticatedError,
   });
 
   final Store<AppState> store;
+  final Function() onUnauthenticatedError;
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -23,10 +25,13 @@ class TokenInterceptors extends Interceptor {
   }
 
   @override
-  Future onError(DioError err, ErrorInterceptorHandler handler) {
-    // print(
-    //     'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+  Future onError(DioException err, ErrorInterceptorHandler handler) {
     super.onError(err, handler);
+
+    if (err.response?.statusCode == 401) {
+      onUnauthenticatedError();
+    }
+
     return Future.value();
   }
 

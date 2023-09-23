@@ -1,5 +1,6 @@
 class RestApis {
-  static const String baseUrl = 'https://llapp-c4c193b5e787.herokuapp.com';
+  // static const String baseUrl = 'https://llapp-c4c193b5e787.herokuapp.com';
+  static const String baseUrl = 'https://lla-app-pyssj.ondigitalocean.app';
 
   // LI
   static const String resumableUpload = '/generate_resumable_upload_url';

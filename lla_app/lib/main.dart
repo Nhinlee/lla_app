@@ -10,6 +10,8 @@ import 'package:redux_simple/redux_simple.dart';
 
 import 'business.dart';
 
+String logoutActionStatusId = '';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -37,6 +39,13 @@ void main() async {
   appInjector.dio.interceptors.add(
     TokenInterceptors(
       store: store,
+      onUnauthenticatedError: () {
+        final action = LogoutAction();
+        logoutActionStatusId = action.statusId;
+        store.dispatch(
+          action,
+        );
+      },
     ),
   );
 

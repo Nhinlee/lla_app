@@ -44,26 +44,31 @@ class _TopicsScreenState<T extends AppState> extends State<TopicsScreen> {
         statusId: _statusId,
         loadingPlaceHolder: const AppCircleLoading(),
         builder: (status) {
-          final topics = _store.state.topicState.topics.values.toList();
-          final totalLIByTopicIds = _store.state.topicState.totalLIByTopicIds;
+          return StoreConnector<T, TopicScreenVM>(
+            converter: (store) {
+              return TopicScreenVM.fromState(store.state);
+            },
+            builder: (context, vm) {
+              final topics = vm.topics;
 
-          return ListView.builder(
-            itemCount: topics.length,
-            itemBuilder: (context, index) {
-              final id = topics[index].id;
-
-              return Hero(
-                tag: HeroWidgetTags.getTopicHeroTag(id),
-                child: TopicWithTotalLIWidget(
-                  index: index,
-                  width: _screenSize.width,
-                  topicEntity: topics[index],
-                  totalLI: totalLIByTopicIds[topics[index].id] ?? 0,
-                  onTap: () => onNavigateToStartLearningScreen(
-                    id,
-                    index,
-                  ),
-                ),
+              return ListView.builder(
+                itemCount: topics.length,
+                itemBuilder: (context, index) {
+                  final id = topics[index].id;
+                  return Hero(
+                    tag: HeroWidgetTags.getTopicHeroTag(id),
+                    child: TopicWithTotalLIWidget(
+                      index: index,
+                      width: _screenSize.width,
+                      topicEntity: topics[index],
+                      totalLI: vm.totalLIByTopicIds[topics[index].id] ?? 0,
+                      onTap: () => onNavigateToStartLearningScreen(
+                        id,
+                        index,
+                      ),
+                    ),
+                  );
+                },
               );
             },
           );

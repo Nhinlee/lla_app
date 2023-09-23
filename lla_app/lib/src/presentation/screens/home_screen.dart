@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lla_app/main.dart';
 import 'package:lla_app/presentation.dart';
 import 'package:lla_app/src/presentation/screens/user/profile_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -44,12 +45,17 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: Colors.transparent,
       ),
       backgroundColor: Colors.white,
-      body: IndexedStack(
-        index: _currentIndex,
-        children: const [
-          LearningItemsScreen(),
-          TopicsScreen(),
-          ProfileScreen(),
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: _currentIndex,
+            children: const [
+              LearningItemsScreen(),
+              TopicsScreen(),
+              ProfileScreen(),
+            ],
+          ),
+          buildLogoutListener(),
         ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(),
@@ -80,6 +86,18 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Profile"),
         ),
       ],
+    );
+  }
+
+  Widget buildLogoutListener() {
+    return AppStatusListener(
+      statusId: logoutActionStatusId,
+      onSuccess: (status) {
+        Navigator.of(context)?.pushNamedAndRemoveUntil(
+          AppRoutes.loginScreen,
+          (route) => false,
+        );
+      },
     );
   }
 }

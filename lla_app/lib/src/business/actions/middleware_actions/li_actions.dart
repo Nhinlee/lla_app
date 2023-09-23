@@ -53,8 +53,16 @@ abstract class UploadLIItemAction extends Object
       ...store.state.liState.learningItems.toMap(),
     };
 
+    final currentTotalLIByTopicID =
+        store.state.topicState.totalLIByTopicIds[learningItem.topicId] ?? 0;
     yield store.state.rebuild(
-      (b) => b..liState.learningItems = MapBuilder(updatedLIs),
+      (b) => b
+        ..liState.learningItems = MapBuilder(updatedLIs)
+        ..topicState.totalLIByTopicIds.addAll(
+          {
+            learningItem.topicId: currentTotalLIByTopicID + 1,
+          },
+        ),
     );
   }
 

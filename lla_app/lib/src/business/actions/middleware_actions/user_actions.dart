@@ -72,3 +72,22 @@ abstract class VerifyAccessTokenAction extends Object
           [void Function(VerifyAccessTokenActionBuilder) updates]) =
       _$VerifyAccessTokenAction;
 }
+
+abstract class LogoutAction
+    with GenStatusId
+    implements
+        MiddlewareWithStatusAction<AppState>,
+        Built<LogoutAction, LogoutActionBuilder> {
+  @override
+  Stream<AppState> call(
+    Store<AppState> store,
+  ) async* {
+    yield store.state.rebuild(
+      (updates) => updates..userState.accessToken = '',
+    );
+  }
+
+  LogoutAction._();
+  factory LogoutAction([void Function(LogoutActionBuilder) updates]) =
+      _$LogoutAction;
+}
